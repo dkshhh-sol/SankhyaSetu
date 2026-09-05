@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * SankhyaSetu design tokens (Tailwind v4 CSS-first theme)
+ * Utilities are generated from these, e.g. bg-brand-600, text-ink,
+ * border-brand-200, font-display.
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Brand blue (from the SankhyaSetu wordmark / "India's Data") */
+  --color-brand-50: #eef4fd;
+  --color-brand-100: #dbe8fb;
+  --color-brand-200: #bcd3f6;
+  --color-brand-300: #93b6ef;
+  --color-brand-400: #5a8fe0;
+  --color-brand-500: #2f6fd0;
+  --color-brand-600: #1d5fc4;
+  --color-brand-700: #184e9f;
+  --color-brand-800: #163f7d;
+  --color-brand-900: #0f2c5a;
+
+  /* Ink / text */
+  --color-ink: #0b1c33;
+  --color-ink-soft: #33445c;
+  --color-ink-muted: #64748b;
+
+  /* App surfaces */
+  --color-surface: #f4f7fb;
+  --color-line: #e3e9f2;
+
+  /* Semantic */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Feature accent tints (icons on the hero) */
+  --color-accent-blue: #2f6fd0;
+  --color-accent-emerald: #17936b;
+  --color-accent-violet: #7c53d6;
+  --color-accent-amber: #d98423;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif,
+    system-ui, "Segoe UI", Roboto, sans-serif;
+
+  --shadow-card: 0 1px 2px rgba(11, 28, 51, 0.04), 0 8px 24px -12px rgba(11, 28, 51, 0.12);
+  --shadow-pop: 0 18px 50px -24px rgba(11, 28, 51, 0.35);
+
+  --animate-fade-up: fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.8s linear infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45); }
+    60% { box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Consistent, accessible focus ring across interactive elements */
+:where(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Thin, unobtrusive scrollbars inside panels */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.scrollbar-thin::-webkit-scrollbar { height: 6px; width: 6px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+
+/* Assessment attempt: text can't be selected or dragged */
+.no-select, .no-select * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Hide scrollbars for horizontal carousels */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Fade the header building into the page on its left/bottom edges */
+.header-building {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 45%),
+    linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 45%),
+    linear-gradient(to bottom, black 55%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Skeleton shimmer used while the RAG pipeline "processes" */
+.shimmer {
+  background: linear-gradient(90deg, #eef2f7 0%, #f8fafc 50%, #eef2f7 100%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
