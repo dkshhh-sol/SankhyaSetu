@@ -33,6 +33,11 @@ import {
 import { gapPriority, round1, type Priority } from "@/lib/data/competencies";
 import { COURSES, type Course } from "@/lib/data/courses";
 import type { Difficulty } from "@/lib/data/questionBank";
+import {
+  integrityFromViolations,
+  type IntegrityStatus,
+  type Violation,
+} from "@/lib/assessment/scoring";
 
 /** Difficulty -> weight. Documented in the "How this was calculated" panel. */
 export const DIFFICULTY_WEIGHT: Record<Difficulty, number> = {
@@ -82,6 +87,14 @@ export interface BaselineResult {
   /** Competencies with a gap > 0, largest first. */
   gaps: CompetencyScore[];
   completedAt: string;
+  /**
+   * Proctoring outcome for the attempt. An `invalid` baseline is shown but
+   * never written into the competency store — the official must retake it.
+   */
+  integrity: IntegrityStatus;
+  violations: Violation[];
+  /** Set when the engine submitted on the official's behalf. */
+  autoSubmitted?: "integrity";
 }
 
 /** True when the answer recorded for a question is the correct option. */
@@ -97,6 +110,8 @@ export function scoreBaseline(
   roleId: string,
   answers: Record<string, number>,
   questions: BaselineQuestion[] = BASELINE_QUESTIONS,
+  violations: Violation[] = [],
+  autoSubmitted?: "integrity",
 ): BaselineResult {
   const role = getRole(roleId);
 
@@ -148,6 +163,9 @@ export function scoreBaseline(
     competencies,
     gaps: competencies.filter((c) => c.gap > 0).sort((a, b) => b.gap - a.gap),
     completedAt: new Date().toISOString(),
+    integrity: integrityFromViolations(violations),
+    violations,
+    autoSubmitted,
   };
 }
 

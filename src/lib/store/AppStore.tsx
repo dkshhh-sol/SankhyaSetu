@@ -64,6 +64,10 @@ export interface OnboardingState {
   assignment?: string;
   /** Selected option index per baseline question id. */
   answers: Record<string, number>;
+  /** Integrity events recorded during the baseline assessment. */
+  violations: Violation[];
+  /** Times the assessment page was (re)loaded mid-attempt. */
+  loads: number;
   /** Set once the baseline assessment has been scored. */
   result?: BaselineResult;
 }
@@ -86,7 +90,7 @@ const initialState: AppState = {
   skillLevels: {},
   customAssessments: [],
   readNotifications: [],
-  onboarding: { answers: {} },
+  onboarding: { answers: {}, violations: [], loads: 0 },
 };
 
 type Action =
@@ -103,6 +107,9 @@ type Action =
   | { type: "onboarding/role"; roleId: string; assignment: string }
   | { type: "onboarding/answer"; questionId: string; option: number }
   | { type: "onboarding/submit"; result: BaselineResult }
+  | { type: "onboarding/violation"; violation: Violation }
+  | { type: "onboarding/load" }
+  | { type: "onboarding/retake" }
   | { type: "reset" };
 
 function reducer(state: AppState, action: Action): AppState {
@@ -156,7 +163,7 @@ function reducer(state: AppState, action: Action): AppState {
     case "notifications/read":
       return { ...state, readNotifications: Array.from(new Set([...state.readNotifications, ...action.ids])) };
     case "onboarding/reset":
-      return { ...state, onboarding: { answers: {} }, skillLevels: {} };
+      return { ...state, onboarding: { answers: {}, violations: [], loads: 0 }, skillLevels: {} };
     case "onboarding/profile":
       return { ...state, onboarding: { ...state.onboarding, profile: action.profile } };
     case "onboarding/role":
@@ -172,14 +179,36 @@ function reducer(state: AppState, action: Action): AppState {
           answers: { ...state.onboarding.answers, [action.questionId]: action.option },
         },
       };
+    case "onboarding/violation":
+      return {
+        ...state,
+        onboarding: {
+          ...state.onboarding,
+          violations: [...state.onboarding.violations, action.violation],
+        },
+      };
+    case "onboarding/load":
+      return { ...state, onboarding: { ...state.onboarding, loads: state.onboarding.loads + 1 } };
+    case "onboarding/retake":
+      // Keep the profile and role; clear the attempt so it starts clean.
+      return {
+        ...state,
+        onboarding: { ...state.onboarding, answers: {}, violations: [], loads: 0, result: undefined },
+        skillLevels: {},
+      };
     case "onboarding/submit":
       // The generated profile becomes this official's competency baseline, so
       // the existing dashboard and competency pages read it like any other
-      // validated result.
+      // validated result. An attempt whose integrity is invalid does NOT move
+      // any competency — the same rule `attempt/finish` applies to a failed
+      // proctored assessment.
       return {
         ...state,
         onboarding: { ...state.onboarding, result: action.result },
-        skillLevels: { ...state.skillLevels, ...skillLevelsFrom(action.result) },
+        skillLevels:
+          action.result.integrity === "invalid"
+            ? state.skillLevels
+            : { ...state.skillLevels, ...skillLevelsFrom(action.result) },
       };
     case "reset":
       return initialState;
