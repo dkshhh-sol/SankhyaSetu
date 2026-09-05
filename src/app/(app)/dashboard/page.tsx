@@ -44,7 +44,7 @@ export default function DashboardPage() {
   ].slice(0, 4);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title={
           <>
@@ -57,17 +57,17 @@ export default function DashboardPage() {
       {/* Stat row */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard icon={BarChart3} tone="blue" title="Overall Competency">
-          <div className="mt-3 flex items-center gap-4">
-            <Donut value={c.overall / 5} size={96} stroke={10} color="#16a34a" track="#e5e7eb">
-              <span className="font-display text-2xl font-extrabold leading-none text-ink">{c.overall.toFixed(1)}</span>
-              <span className="text-[11px] text-ink-muted">/ 5.0</span>
+          <div className="mt-2 flex items-center gap-3">
+            <Donut value={c.overall / 5} size={64} stroke={7} color="#16a34a" track="#e5e7eb">
+              <span className="font-display text-lg font-bold leading-none text-ink">{c.overall.toFixed(1)}</span>
+              <span className="text-[10px] text-ink-muted">/ 5.0</span>
             </Donut>
             <div>
-              <p className="font-display text-lg font-bold text-ink">{overallLabel(c.overall)}</p>
-              <p className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-emerald-600">
+              <p className="font-display text-[15px] font-semibold text-ink">{overallLabel(c.overall)}</p>
+              <p className="mt-0.5 inline-flex items-center gap-1 text-[13px] font-semibold text-emerald-600">
                 <TrendingUp className="size-4" aria-hidden /> +{c.overallDelta.toFixed(1)}
               </p>
-              <p className="text-xs text-ink-muted">since last assessment</p>
+              <p className="text-[11px] text-ink-muted">since last assessment</p>
             </div>
           </div>
         </StatCard>
@@ -99,14 +99,14 @@ export default function DashboardPage() {
 
       {/* Competency overview + skill gaps */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.55fr_1fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Competency Overview" action={<LinkArrow href="/competency">View Detailed Profile</LinkArrow>} />
-          <ul className="mt-5 space-y-3.5">
+          <ul className="mt-3 space-y-2">
             {c.domains.map((d) => (
               <li key={d.id} className="grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:grid-cols-[auto_minmax(0,220px)_1fr_auto] sm:gap-4">
-                <DomainIcon icon={d.icon} accent={d.accent} />
+                <DomainIcon icon={d.icon} accent={d.accent} size="sm" />
                 <span className="text-sm font-medium text-ink-soft sm:col-span-1">{d.name}</span>
-                <ProgressBar value={d.level} max={5} tone={toneForLevel(d.level, d.required)} className="col-span-3 sm:col-span-1" size="md" />
+                <ProgressBar value={d.level} max={5} tone={toneForLevel(d.level, d.required)} className="col-span-3 sm:col-span-1" size="sm" />
                 <span className="hidden text-sm font-semibold text-ink sm:block">
                   {d.level.toFixed(1)} <span className="font-normal text-ink-muted">/ 5.0</span>
                 </span>
@@ -115,19 +115,19 @@ export default function DashboardPage() {
           </ul>
         </Card>
 
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Skill Gap Summary" action={<LinkArrow href="/competency">View All Gaps</LinkArrow>} />
-          <div className="mt-5 flex flex-wrap items-center gap-6">
+          <div className="mt-3 flex flex-wrap items-center gap-5">
             <MultiDonut
-              size={132}
-              stroke={18}
+              size={96}
+              stroke={12}
               segments={[
                 { value: c.gapCounts.High, color: "#ef4444" },
                 { value: c.gapCounts.Medium, color: "#f59e0b" },
                 { value: c.gapCounts.Low, color: "#7fb8b0" },
               ]}
             >
-              <span className="font-display text-3xl font-extrabold leading-none text-ink">{c.gaps.length}</span>
+              <span className="font-display text-xl font-bold leading-none text-ink">{c.gaps.length}</span>
               <span className="mt-1 text-xs text-ink-muted">Skill Gaps</span>
             </MultiDonut>
             <ul className="flex-1 space-y-2.5 text-sm">
@@ -147,9 +147,9 @@ export default function DashboardPage() {
               ))}
             </ul>
           </div>
-          <div className="mt-5 rounded-2xl bg-surface p-4">
-            <p className="font-display text-sm font-bold text-ink">Top Skill Gaps</p>
-            <ol className="mt-3 space-y-2.5">
+          <div className="mt-3 rounded-xl bg-surface p-3">
+            <p className="font-display text-sm font-semibold text-ink">Top Skill Gaps</p>
+            <ol className="mt-2 space-y-2">
               {c.gaps.slice(0, 3).map((g, i) => (
                 <li key={g.skillId} className="flex items-center justify-between gap-3 text-sm">
                   <span className="flex items-center gap-2.5 text-ink-soft">
@@ -166,22 +166,22 @@ export default function DashboardPage() {
 
       {/* Recommendations + activity */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.75fr_1fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Recommended for You" action={<LinkArrow href="/learning">View All Recommendations</LinkArrow>} />
-          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {RECOMMENDED_COURSES.slice(0, 3).map((course) => (
               <CourseCard key={course.id} course={course} variant="compact" />
             ))}
           </div>
         </Card>
 
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Recent Activity" action={<LinkArrow href="/evidence">View All</LinkArrow>} />
           <ul className="mt-4 divide-y divide-line">
             {activity.map((a) => {
               const meta = ACTIVITY_ICON[a.kind];
               return (
-                <li key={a.id} className="flex items-start gap-3 py-3.5 first:pt-2 last:pb-0">
+                <li key={a.id} className="flex items-start gap-3 py-3 first:pt-1 last:pb-0">
                   <IconTile icon={meta.icon} tone={meta.tone} rounded="full" />
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-ink">{a.title}</p>

@@ -31,7 +31,7 @@ export function Header({ onMenu }: HeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-30 h-[72px] border-b border-line bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-30 h-14 border-b border-line bg-white/90 backdrop-blur">
       <div className="flex h-full items-center gap-3 px-4 sm:px-5">
         <button
           type="button"
@@ -42,11 +42,11 @@ export function Header({ onMenu }: HeaderProps) {
           <Menu className="size-5" />
         </button>
 
-        <Link href="/dashboard" className="shrink-0 lg:w-[228px]">
-          <Logo wordmarkClassName="text-[22px]" />
+        <Link href="/dashboard" className="shrink-0 lg:w-[204px]">
+          <Logo wordmarkClassName="text-lg" />
         </Link>
 
-        <div className="hidden h-10 w-px bg-line lg:block" />
+        <div className="hidden h-8 w-px bg-line lg:block" />
         <MinistryEmblem compact className="hidden xl:flex" />
 
         <SearchBox className="ml-auto hidden md:flex" />
@@ -56,7 +56,7 @@ export function Header({ onMenu }: HeaderProps) {
             unread={unread}
             onOpen={() => dispatch({ type: "notifications/read", ids: NOTIFICATIONS.map((n) => n.id) })}
           />
-          <div className="mx-1 hidden h-8 w-px bg-line sm:block" />
+          <div className="mx-1 hidden h-6 w-px bg-line sm:block" />
           <UserMenu
             name={session?.name ?? "Guest"}
             role={session?.role ?? ""}
@@ -114,7 +114,7 @@ function SearchBox({ className }: { className?: string }) {
 
   return (
     <div ref={ref} className={cn("relative w-full max-w-sm 2xl:max-w-lg", className)}>
-      <div className="flex h-11 items-center gap-2 rounded-xl border border-line bg-surface px-3.5">
+      <div className="flex h-9 items-center gap-2 rounded-lg border border-line bg-surface px-3">
         <Search className="size-4 shrink-0 text-ink-muted" aria-hidden />
         <input
           value={q}
@@ -165,13 +165,13 @@ function NotificationsMenu({ unread, onOpen }: { unread: number; onOpen: () => v
           setOpen((o) => !o);
           if (!open) onOpen();
         }}
-        className="relative rounded-lg p-2 text-ink-soft hover:bg-slate-100"
+        className="relative rounded-lg p-1.5 text-ink-soft hover:bg-slate-100"
         aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}
         aria-expanded={open}
       >
-        <Bell className="size-5" strokeWidth={1.9} />
+        <Bell className="size-[18px]" strokeWidth={1.9} />
         {unread > 0 && (
-          <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-red-500 ring-2 ring-white" aria-hidden />
+          <span className="absolute right-1 top-1 size-2 rounded-full bg-red-500 ring-2 ring-white" aria-hidden />
         )}
       </button>
       {open && (
@@ -213,14 +213,14 @@ function UserMenu({ name, role, initials, accent, onSignOut }: UserMenuProps) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2.5 rounded-xl px-1.5 py-1 hover:bg-slate-100"
+        className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-slate-100"
         aria-expanded={open}
         aria-haspopup="menu"
       >
         <Avatar initials={initials} tone={accent} />
         <span className="hidden text-left sm:block">
-          <span className="block whitespace-nowrap text-sm font-bold leading-tight text-ink">{name}</span>
-          <span className="block text-xs text-ink-muted">{role}</span>
+          <span className="block whitespace-nowrap text-[13px] font-semibold leading-tight text-ink">{name}</span>
+          <span className="block text-[11px] text-ink-muted">{role}</span>
         </span>
         <ChevronDown className="hidden size-4 text-ink-muted sm:block" aria-hidden />
       </button>

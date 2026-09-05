@@ -20,7 +20,7 @@ export default function CourseDetailPage() {
 
   if (!course) {
     return (
-      <div className="rounded-3xl bg-white p-10 text-center">
+      <div className="rounded-xl bg-white p-10 text-center">
         <p className="text-lg font-semibold text-ink">Course not found.</p>
         <Link href="/learning" className="mt-3 inline-block text-brand-600 hover:underline">
           Back to recommendations
@@ -37,7 +37,7 @@ export default function CourseDetailPage() {
   const providerName = PROVIDER_FULL[course.provider];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Learning Recommendations", href: "/learning" }, { label: "Course Details" }]}
         title={course.title}
@@ -48,14 +48,14 @@ export default function CourseDetailPage() {
         </Link>
       </PageHeader>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.75fr_1fr]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.75fr_1fr]">
         {/* Main column */}
-        <div className="space-y-5">
+        <div className="space-y-4">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <ProviderBadge provider={course.provider} className="text-sm" />
-              <p className="mt-3 text-base leading-relaxed text-ink-soft sm:text-lg">{course.longDescription.split(". ")[0]}.</p>
-              <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 2xl:grid-cols-4">
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">{course.longDescription.split(". ")[0]}.</p>
+              <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 2xl:grid-cols-4">
                 {[
                   { icon: Clock, v: course.duration, k: "Duration" },
                   { icon: BarChart2, v: course.level, k: "Level" },
@@ -75,39 +75,39 @@ export default function CourseDetailPage() {
             <img
               src={course.id === "adv-data-viz-python" ? "/images/course-python-large.png" : course.image}
               alt=""
-              className="h-40 w-full shrink-0 rounded-2xl object-cover sm:h-44 sm:w-60"
+              className="h-40 w-full shrink-0 rounded-xl object-cover sm:h-44 sm:w-60"
               draggable={false}
             />
           </div>
 
           {/* Why recommended */}
-          <Card className="bg-brand-50/60 p-5 sm:p-6">
+          <Card className="bg-brand-50/60 p-4 sm:p-5">
             <div className="flex items-start gap-3">
               <IconTile icon={Target} tone="blue" rounded="full" />
               <div>
-                <h2 className="font-display text-lg font-bold text-ink">Why is this recommended for you?</h2>
+                <h2 className="font-display text-[15px] font-semibold text-ink">Why is this recommended for you?</h2>
                 <p className="text-sm text-ink-soft">This course addresses your skill gap in {course.skillName}.</p>
               </div>
             </div>
-            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-center">
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-center">
               <div>
                 <p className="text-sm text-ink-soft">Current Competency</p>
-                <p className="mt-1 font-display text-2xl font-extrabold text-ink">
+                <p className="mt-1 font-display text-xl font-bold text-ink">
                   {current.toFixed(1)} <span className="text-base font-semibold text-ink-muted">/ 5</span>
                 </p>
                 <ProgressBar value={current} max={5} tone={toneForLevel(current, skill.required)} className="mt-2" />
               </div>
               <div>
                 <p className="text-sm text-ink-soft">Required Competency</p>
-                <p className="mt-1 font-display text-2xl font-extrabold text-ink">
+                <p className="mt-1 font-display text-xl font-bold text-ink">
                   {skill.required.toFixed(1)} <span className="text-base font-semibold text-ink-muted">/ 5</span>
                 </p>
                 <ProgressBar value={skill.required} max={5} tone="blue" className="mt-2" />
               </div>
-              <div className="rounded-2xl bg-red-50 px-5 py-4 sm:min-w-[200px]">
+              <div className="rounded-xl bg-red-50 px-5 py-4 sm:min-w-[200px]">
                 <p className="text-sm text-ink-soft">Skill Gap</p>
                 <p className="mt-1 flex items-center gap-3">
-                  <span className="font-display text-2xl font-extrabold text-ink">{gap.toFixed(1)}</span>
+                  <span className="font-display text-xl font-bold text-ink">{gap.toFixed(1)}</span>
                   <PriorityBadge priority={priority} className="text-sm">
                     {priority} Priority
                   </PriorityBadge>
@@ -117,19 +117,19 @@ export default function CourseDetailPage() {
           </Card>
 
           {/* About */}
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <div className="flex items-start gap-3">
               <IconTile icon={FileText} tone="blue" rounded="full" />
               <div>
-                <h2 className="font-display text-lg font-bold text-ink">About the Course</h2>
-                <p className="mt-1 text-sm leading-relaxed text-ink-soft sm:text-[15px]">{course.longDescription}</p>
+                <h2 className="font-display text-[15px] font-semibold text-ink">About the Course</h2>
+                <p className="mt-1 text-sm leading-relaxed text-ink-soft">{course.longDescription}</p>
               </div>
             </div>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:divide-x md:divide-line">
+            <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 md:divide-x md:divide-line">
               <div>
                 <div className="flex items-center gap-3">
                   <IconTile icon={Lightbulb} tone="blue" size="sm" rounded="full" />
-                  <h3 className="font-display text-base font-bold text-ink">What you will learn</h3>
+                  <h3 className="font-display text-sm font-semibold text-ink">What you will learn</h3>
                 </div>
                 <ul className="mt-3 space-y-2.5">
                   {course.outcomes.map((o) => (
@@ -142,7 +142,7 @@ export default function CourseDetailPage() {
               <div className="md:pl-6">
                 <div className="flex items-center gap-3">
                   <IconTile icon={BookOpen} tone="blue" size="sm" rounded="full" />
-                  <h3 className="font-display text-base font-bold text-ink">Prerequisites</h3>
+                  <h3 className="font-display text-sm font-semibold text-ink">Prerequisites</h3>
                 </div>
                 <ul className="mt-3 space-y-2.5">
                   {course.prerequisites.map((p) => (
@@ -154,10 +154,10 @@ export default function CourseDetailPage() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl bg-surface p-5">
+            <div className="mt-4 rounded-xl bg-surface p-5">
               <div className="flex items-center gap-3">
                 <IconTile icon={Info} tone="blue" size="sm" rounded="full" />
-                <h3 className="font-display text-base font-bold text-ink">Course Information</h3>
+                <h3 className="font-display text-sm font-semibold text-ink">Course Information</h3>
               </div>
               <dl className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
                 {[
@@ -179,13 +179,13 @@ export default function CourseDetailPage() {
         </div>
 
         {/* Side column */}
-        <div className="space-y-5">
+        <div className="space-y-4">
           <Card className="p-5">
             <a
               href={course.providerUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-brand-600 text-base font-bold text-white shadow-sm hover:bg-brand-700"
+              className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-brand-600 text-sm font-semibold text-white shadow-sm hover:bg-brand-700"
             >
               Open on {providerName} <ExternalLink className="size-5" aria-hidden />
             </a>
@@ -204,7 +204,7 @@ export default function CourseDetailPage() {
           <Card className="p-5">
             <div className="flex items-center gap-3">
               <IconTile icon={CheckCircle2} tone="emerald" size="sm" rounded="full" />
-              <h3 className="font-display text-base font-bold text-ink">After completing this course</h3>
+              <h3 className="font-display text-sm font-semibold text-ink">After completing this course</h3>
             </div>
             <ul className="mt-3 space-y-2.5 text-sm text-ink-soft">
               {[
@@ -235,7 +235,7 @@ export default function CourseDetailPage() {
           <Card className="p-5">
             <div className="flex items-center gap-3">
               <IconTile icon={FileText} tone="blue" size="sm" rounded="full" />
-              <h3 className="font-display text-base font-bold text-ink">Related Competencies</h3>
+              <h3 className="font-display text-sm font-semibold text-ink">Related Competencies</h3>
             </div>
             <ul className="mt-4 space-y-3">
               {course.relatedSkillIds.map((id) => {
@@ -257,7 +257,7 @@ export default function CourseDetailPage() {
           <Card className="p-5">
             <div className="flex items-center gap-3">
               <IconTile icon={Compass} tone="blue" size="sm" rounded="full" />
-              <h3 className="font-display text-base font-bold text-ink">Explore More</h3>
+              <h3 className="font-display text-sm font-semibold text-ink">Explore More</h3>
             </div>
             <ul className="mt-3 divide-y divide-line text-sm">
               <li>

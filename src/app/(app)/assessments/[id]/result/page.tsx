@@ -27,7 +27,7 @@ export default function ResultPage() {
   if (!hydrated) return null;
   if (!assessment || !result) {
     return (
-      <div className="rounded-3xl bg-white p-10 text-center">
+      <div className="rounded-xl bg-white p-10 text-center">
         <p className="text-lg font-semibold text-ink">No result found for this assessment.</p>
         <Link href="/assessments" className="mt-3 inline-block text-brand-600 hover:underline">Back to assessments</Link>
       </div>
@@ -51,7 +51,7 @@ export default function ResultPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Assessments", href: "/assessments" }, { label: "Assessment Result" }]}
         title="Assessment Result"
@@ -64,10 +64,10 @@ export default function ResultPage() {
         }
         building={false}
         aside={
-          <div className="flex items-center gap-4 rounded-2xl border border-line bg-white p-3 pr-5 shadow-card">
-            <span className="flex h-12 w-16 items-center justify-center rounded-xl bg-brand-50 font-display text-lg font-extrabold text-brand-700">{assessment.provider}</span>
+          <div className="flex items-center gap-4 rounded-xl border border-line bg-white p-3 pr-5 shadow-card">
+            <span className="flex h-10 w-14 items-center justify-center rounded-lg bg-brand-50 font-display text-base font-bold text-brand-700">{assessment.provider}</span>
             <div>
-              <p className="font-display text-sm font-bold text-ink sm:text-base">{assessment.linkedCourseTitle}</p>
+              <p className="font-display text-sm font-semibold text-ink">{assessment.linkedCourseTitle}</p>
               <p className="text-xs text-ink-muted">{providerName}{evidence ? ` - Completed on ${evidence.date}` : ""}</p>
             </div>
           </div>
@@ -79,11 +79,11 @@ export default function ResultPage() {
         <Card className={cn("p-5", result.passed ? "border-emerald-100 bg-emerald-50/40" : "border-amber-100 bg-amber-50/40")}>
           <CardHeader icon={<IconTile icon={BarChart3} tone={result.passed ? "emerald" : "amber"} size="sm" rounded="full" />} title="Your Score" />
           <div className="mt-4 flex items-center gap-5">
-            <Donut value={result.scorePct / 100} size={128} stroke={12} color={result.passed ? "#16a34a" : "#f59e0b"} track="#e5e7eb">
-              <span className="font-display text-3xl font-extrabold leading-none text-ink">{result.scorePct}%</span>
+            <Donut value={result.scorePct / 100} size={104} stroke={10} color={result.passed ? "#16a34a" : "#f59e0b"} track="#e5e7eb">
+              <span className="font-display text-2xl font-bold leading-none text-ink">{result.scorePct}%</span>
             </Donut>
-            <div className={cn("flex-1 rounded-2xl p-4", result.passed ? "bg-emerald-100/70" : "bg-amber-100/70")}>
-              <p className="flex items-center gap-2 font-display text-lg font-bold text-ink">
+            <div className={cn("flex-1 rounded-xl p-4", result.passed ? "bg-emerald-100/70" : "bg-amber-100/70")}>
+              <p className="flex items-center gap-2 font-display text-[15px] font-semibold text-ink">
                 {result.passed ? <CheckCircle2 className="size-5 text-emerald-600" /> : <XCircle className="size-5 text-amber-600" />}
                 {result.passed ? "Pass" : "Not Passed"}
               </p>
@@ -100,7 +100,7 @@ export default function ResultPage() {
             ].map((s) => (
               <div key={s.k}>
                 <dt className="text-xs text-ink-muted">{s.k}</dt>
-                <dd className="mt-1 font-display text-xl font-extrabold text-ink">{s.v}</dd>
+                <dd className="mt-1 font-display text-lg font-bold text-ink">{s.v}</dd>
               </div>
             ))}
           </dl>
@@ -119,7 +119,7 @@ export default function ResultPage() {
             </ul>
             <div className="flex flex-col items-center justify-center border-l border-line pl-4 text-center">
               {valid ? <ShieldCheck className="size-14 text-emerald-500" strokeWidth={1.6} aria-hidden /> : <ShieldAlert className="size-14 text-red-500" strokeWidth={1.6} aria-hidden />}
-              <p className={cn("mt-1 font-display text-2xl font-extrabold", valid ? "text-emerald-600" : "text-red-600")}>
+              <p className={cn("mt-1 font-display text-xl font-bold", valid ? "text-emerald-600" : "text-red-600")}>
                 {result.integrity === "valid" ? "Valid" : result.integrity === "review" ? "Review" : "Invalid"}
               </p>
               <p className="mt-1 max-w-[130px] text-xs text-ink-soft">
@@ -177,7 +177,7 @@ export default function ResultPage() {
 
       {/* Question-wise + topic-wise */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_1.15fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader icon={<IconTile icon={FileText} tone="blue" size="sm" rounded="full" />} title="Question-wise Performance" />
           <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-10">
             {result.perQuestion.map((p, i) => (
@@ -200,7 +200,7 @@ export default function ResultPage() {
           </div>
         </Card>
 
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader icon={<IconTile icon={BarChart3} tone="blue" size="sm" rounded="full" />} title="Topic-wise Performance" />
           <ul className="mt-4 space-y-3">
             {result.topics.map((t) => {
@@ -220,7 +220,7 @@ export default function ResultPage() {
 
       {/* What's next + impact */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_1.35fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader icon={<IconTile icon={UserCheck} tone="blue" size="sm" rounded="full" />} title="What's Next?" />
           <ol className="mt-4 space-y-4">
             {[
@@ -240,10 +240,10 @@ export default function ResultPage() {
           </ol>
         </Card>
 
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader icon={<IconTile icon={TrendingUp} tone="blue" size="sm" rounded="full" />} title="Competency Impact (Estimated)" />
-          <div className={cn("mt-4 rounded-2xl p-4", updated ? "bg-brand-50/60" : "bg-slate-50")}>
-            <p className="font-display text-base font-bold text-ink">{primary.skillName}</p>
+          <div className={cn("mt-4 rounded-xl p-4", updated ? "bg-brand-50/60" : "bg-slate-50")}>
+            <p className="font-display text-sm font-semibold text-ink">{primary.skillName}</p>
             <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
               <div className="space-y-2.5">
                 {[
@@ -257,8 +257,8 @@ export default function ResultPage() {
                   </div>
                 ))}
               </div>
-              <div className={cn("rounded-2xl px-6 py-4 text-center", updated ? "bg-emerald-50" : "bg-slate-100")}>
-                <p className={cn("flex items-center justify-center gap-1.5 font-display text-2xl font-extrabold", updated ? "text-emerald-600" : "text-ink-muted")}>
+              <div className={cn("rounded-xl px-6 py-4 text-center", updated ? "bg-emerald-50" : "bg-slate-100")}>
+                <p className={cn("flex items-center justify-center gap-1.5 font-display text-xl font-bold", updated ? "text-emerald-600" : "text-ink-muted")}>
                   <TrendingUp className="size-6" aria-hidden /> {primary.delta > 0 ? "+" : ""}{primary.delta.toFixed(1)}
                 </p>
                 <p className="text-xs text-ink-soft">{updated ? "Improvement" : "No change"}</p>
@@ -281,7 +281,7 @@ export default function ResultPage() {
               ? "Your competency profile has been updated based on assessment performance and role requirements."
               : "Competency only moves when a course is completed, the assessment is passed and integrity is valid. One of these conditions was not met."}
           </p>
-          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-end">
             <ButtonLink href={updated ? "/progress" : "/competency"} variant="outline" rightIcon={<ArrowRight className="size-4" />}>
               View Competency Profile
             </ButtonLink>

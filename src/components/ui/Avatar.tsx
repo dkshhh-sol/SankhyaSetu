@@ -17,8 +17,8 @@ export function Avatar({ initials, tone = "blue", size = "md", className }: Avat
   return (
     <span
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full font-bold",
-        size === "sm" ? "size-8 text-xs" : size === "md" ? "size-10 text-sm" : "size-14 text-lg",
+        "flex shrink-0 items-center justify-center rounded-full font-semibold",
+        size === "sm" ? "size-7 text-[11px]" : size === "md" ? "size-8 text-xs" : "size-12 text-base",
         tones[tone],
         className,
       )}

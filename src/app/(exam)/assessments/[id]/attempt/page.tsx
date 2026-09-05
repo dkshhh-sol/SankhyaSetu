@@ -194,20 +194,20 @@ export default function AttemptPage() {
   if (phase === "gate") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 p-6">
-        <div className="w-full max-w-lg animate-fade-up rounded-3xl bg-white p-8 text-center shadow-pop">
+        <div className="w-full max-w-lg animate-fade-up rounded-xl bg-white p-8 text-center shadow-pop">
           <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-brand-50">
             <Maximize2 className="size-8 text-brand-600" aria-hidden />
           </span>
-          <h1 className="mt-5 font-display text-2xl font-extrabold text-ink">{attempt ? "Resume your assessment" : "Ready to begin?"}</h1>
+          <h1 className="mt-4 font-display text-xl font-bold text-ink">{attempt ? "Resume your assessment" : "Ready to begin?"}</h1>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">
             {assessment.title} will open in full-screen mode with live proctoring. {attempt ? "Your answers and timer have been preserved." : `You have ${assessment.timeLimitMin} minutes for ${assessment.questions.length} questions.`}
           </p>
-          <ul className="mt-5 space-y-2 rounded-2xl bg-surface p-4 text-left text-xs text-ink-soft">
+          <ul className="mt-4 space-y-2 rounded-xl bg-surface p-4 text-left text-xs text-ink-soft">
             <li className="flex items-start gap-2"><ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-500" /> Stay in full screen; leaving is recorded.</li>
             <li className="flex items-start gap-2"><ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-500" /> Do not switch tabs or applications.</li>
             <li className="flex items-start gap-2"><ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-500" /> {MAX_VIOLATIONS} critical events end the assessment.</li>
           </ul>
-          <Button size="lg" className="mt-6 w-full" onClick={begin} rightIcon={<ArrowRight className="size-4" />}>
+          <Button size="lg" className="mt-4 w-full" onClick={begin} rightIcon={<ArrowRight className="size-4" />}>
             {attempt ? "Enter full screen & resume" : "Enter full screen & begin"}
           </Button>
           <button type="button" onClick={() => router.push(`/assessments/${id}`)} className="mt-3 text-sm font-medium text-ink-muted hover:text-ink">
@@ -231,7 +231,7 @@ export default function AttemptPage() {
           <div className="flex min-w-0 items-center gap-3">
             <LogoMark className="h-7 w-auto shrink-0" />
             <div className="min-w-0">
-              <p className="truncate font-display text-sm font-bold text-ink sm:text-base">{assessment.title}</p>
+              <p className="truncate font-display text-sm font-semibold text-ink">{assessment.title}</p>
               <p className="hidden truncate text-xs text-ink-muted sm:block">
                 <span className="font-semibold text-brand-700">{assessment.provider}</span> &middot; {assessment.linkedCourseTitle}
               </p>
@@ -250,14 +250,14 @@ export default function AttemptPage() {
               <Clock className="size-4.5" aria-hidden />
               <div className="leading-tight">
                 <p className="text-[10px] font-medium uppercase tracking-wide text-current/70">Time Remaining</p>
-                <p className="font-display text-lg font-extrabold tabular-nums">{formatDuration(remainingSec)}</p>
+                <p className="font-display text-lg font-bold tabular-nums">{formatDuration(remainingSec)}</p>
               </div>
             </div>
             <div className="hidden items-center gap-2 rounded-xl bg-surface px-3 py-1.5 sm:flex">
               <Flag className="size-4.5 text-red-500" aria-hidden />
               <div className="leading-tight">
                 <p className="text-[10px] font-medium uppercase tracking-wide text-ink-muted">Flagged</p>
-                <p className="font-display text-lg font-extrabold text-ink">{flaggedSet.size}</p>
+                <p className="font-display text-lg font-bold text-ink">{flaggedSet.size}</p>
               </div>
             </div>
             <Button variant="danger" size="sm" onClick={() => setConfirmEnd(true)} rightIcon={<LogOut className="size-4" />} className="ml-auto sm:ml-0">
@@ -269,7 +269,7 @@ export default function AttemptPage() {
 
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-5 px-4 py-5 sm:px-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,1fr)]">
         {/* Question card */}
-        <section className="flex flex-col rounded-2xl border border-line bg-white p-5 shadow-card sm:p-7" aria-live="polite">
+        <section className="flex flex-col rounded-xl border border-line bg-white p-5 shadow-card sm:p-7" aria-live="polite">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <Badge tone="blue" size="md">Multiple Choice</Badge>
             <span className="text-sm text-ink-soft">
@@ -277,12 +277,12 @@ export default function AttemptPage() {
               <Badge tone={q.difficulty === "Easy" ? "emerald" : q.difficulty === "Medium" ? "amber" : "red"} size="md">{q.difficulty}</Badge>
             </span>
           </div>
-          <h2 className="mt-5 flex gap-4 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">
+          <h2 className="mt-4 flex gap-4 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
             <span className="shrink-0 text-ink-muted">Q{current + 1}.</span>
             <span>{q.prompt}</span>
           </h2>
 
-          <ul className="mt-6 space-y-3" role="radiogroup" aria-label={`Answer options for question ${current + 1}`}>
+          <ul className="mt-4 space-y-3" role="radiogroup" aria-label={`Answer options for question ${current + 1}`}>
             {displayOrder.map((origIdx, i) => {
               const on = selected === origIdx;
               return (
@@ -293,7 +293,7 @@ export default function AttemptPage() {
                     aria-checked={on}
                     onClick={() => choose(origIdx)}
                     className={cn(
-                      "flex w-full items-center gap-4 rounded-xl border px-4 py-3.5 text-left text-base transition-colors sm:px-5 sm:py-4",
+                      "flex w-full items-center gap-4 rounded-lg border px-4 py-3 text-left text-[15px] transition-colors",
                       on ? "border-brand-500 bg-brand-50 text-ink" : "border-line bg-white text-ink-soft hover:border-brand-200 hover:bg-brand-50/40",
                     )}
                   >
@@ -333,13 +333,13 @@ export default function AttemptPage() {
         <aside className="space-y-4">
           <ProctorPanel videoRef={videoRef} proctor={proctor} violations={attempt.violations} isFullscreen={isFullscreen} />
           <QuestionNavigator total={questions.length} current={current} answered={answeredSet} flagged={flaggedSet} onJump={go} />
-          <div className="rounded-2xl border border-line bg-white p-4 shadow-card">
+          <div className="rounded-xl border border-line bg-white p-4 shadow-card">
             <div className="flex items-start gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <HelpCircle className="size-4.5" aria-hidden />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-display text-sm font-bold text-ink">Need Help?</p>
+                <p className="font-display text-sm font-semibold text-ink">Need Help?</p>
                 <p className="mt-0.5 text-xs text-ink-soft">If you face any technical issue during the assessment, please contact support.</p>
                 <a href="mailto:support@sankhyasetu.demo.gov.in" className="mt-3 inline-flex h-9 items-center gap-2 rounded-xl border border-brand-200 bg-white px-3.5 text-sm font-semibold text-brand-700 hover:bg-brand-50">
                   Contact Support <ExternalLink className="size-4" aria-hidden />
@@ -419,7 +419,7 @@ export default function AttemptPage() {
       {phase === "submitting" && (
         <div className="fixed inset-0 z-[110] flex flex-col items-center justify-center gap-4 bg-white/90 backdrop-blur">
           <span className="size-10 animate-spin rounded-full border-[3px] border-brand-200 border-t-brand-600" aria-hidden />
-          <p className="font-display text-lg font-bold text-ink">Scoring your assessment...</p>
+          <p className="font-display text-[15px] font-semibold text-ink">Scoring your assessment...</p>
           <p className="text-sm text-ink-muted">Evaluating answers and verifying integrity.</p>
         </div>
       )}

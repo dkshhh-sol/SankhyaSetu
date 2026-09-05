@@ -23,7 +23,7 @@ export function DemoAccountRow({
   disabled = false,
 }: DemoAccountRowProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 transition-colors hover:border-brand-200 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:p-4">
+    <div className="flex flex-col gap-2.5 rounded-2xl border border-slate-200 bg-white p-2.5 transition-colors hover:border-brand-200 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:p-3">
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <span
           className={cn(

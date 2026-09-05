@@ -21,7 +21,7 @@ export default function AssessmentsPage() {
   const inProgress = Object.keys(state.attempts);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Assessments" }]}
         title="Assessments"
@@ -35,16 +35,16 @@ export default function AssessmentsPage() {
         <StatCard icon={Lock} tone="slate" title="Locked" value={locked.length} caption="Awaiting evidence verification" />
       </div>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.7fr_1fr]">
-        <div className="space-y-5">
-          <Card className="p-5 sm:p-6">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.7fr_1fr]">
+        <div className="space-y-4">
+          <Card className="p-4 sm:p-5">
             <CardHeader
               icon={<IconTile icon={PlayCircle} tone="blue" rounded="full" />}
               title="Ready to Take"
               subtitle="Assessments linked to learning that has been verified."
             />
             {available.length === 0 ? (
-              <p className="mt-4 rounded-2xl bg-surface p-6 text-center text-sm text-ink-muted">No assessments are waiting. Complete a recommended course to unlock one.</p>
+              <p className="mt-4 rounded-xl bg-surface p-6 text-center text-sm text-ink-muted">No assessments are waiting. Complete a recommended course to unlock one.</p>
             ) : (
               <ul className="mt-4 space-y-3">
                 {available.map((a) => (
@@ -60,16 +60,16 @@ export default function AssessmentsPage() {
           </Card>
 
           {completed.length > 0 && (
-            <Card className="p-5 sm:p-6">
+            <Card className="p-4 sm:p-5">
               <CardHeader icon={<IconTile icon={CheckCircle2} tone="emerald" rounded="full" />} title="Completed" subtitle="Your results and their competency impact." />
               <ul className="mt-4 divide-y divide-line">
                 {completed.map((a) => {
                   const r = state.results[a.id];
                   const valid = r.integrity !== "invalid";
                   return (
-                    <li key={a.id} className="flex flex-col gap-3 py-4 first:pt-2 last:pb-0 sm:flex-row sm:items-center">
+                    <li key={a.id} className="flex flex-col gap-3 py-3 first:pt-1 last:pb-0 sm:flex-row sm:items-center">
                       <div className="min-w-0 flex-1">
-                        <p className="font-display text-[15px] font-bold text-ink">{a.title}</p>
+                        <p className="font-display text-sm font-semibold text-ink">{a.title}</p>
                         <p className="mt-0.5 text-xs text-ink-muted">Submitted {formatDate(r.submittedAt, true)}</p>
                       </div>
                       <div className="flex flex-wrap items-center gap-2">
@@ -89,15 +89,15 @@ export default function AssessmentsPage() {
             </Card>
           )}
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Lock} tone="slate" rounded="full" />} title="Locked" subtitle="Unlocked automatically once the linked learning is verified." />
             <ul className="mt-4 space-y-3">
               {locked.map((a) => (
-                <li key={a.id} className="flex flex-col gap-3 rounded-2xl border border-dashed border-line bg-surface/60 p-4 sm:flex-row sm:items-center">
+                <li key={a.id} className="flex flex-col gap-3 rounded-xl border border-dashed border-line bg-surface/60 p-4 sm:flex-row sm:items-center">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <ProviderBadge provider={a.provider} />
-                      <p className="font-display text-[15px] font-bold text-ink">{a.title}</p>
+                      <p className="font-display text-sm font-semibold text-ink">{a.title}</p>
                     </div>
                     <p className="mt-1 text-sm text-ink-soft">{a.lockedReason}</p>
                   </div>
@@ -110,21 +110,21 @@ export default function AssessmentsPage() {
           </Card>
         </div>
 
-        <div className="space-y-5">
+        <div className="space-y-4">
           <Card className="bg-gradient-to-br from-brand-600 to-brand-800 p-5 text-white sm:p-6">
-            <span className="inline-flex size-11 items-center justify-center rounded-full bg-white/15">
+            <span className="inline-flex size-9 items-center justify-center rounded-full bg-white/15">
               <Sparkles className="size-5" aria-hidden />
             </span>
             <h2 className="mt-4 font-display text-xl font-bold">Assessment Studio</h2>
             <p className="mt-1.5 text-sm leading-relaxed text-white/85">
               Create a competency assessment from learning material. The retrieval pipeline extracts key concepts and assembles a question pool for review.
             </p>
-            <ButtonLink href="/assessments/studio" className="mt-5 w-full bg-white text-brand-700 hover:bg-brand-50" rightIcon={<ArrowRight className="size-4" />}>
+            <ButtonLink href="/assessments/studio" variant="outline" className="mt-4 w-full border-white bg-white text-brand-700 hover:bg-brand-50" rightIcon={<ArrowRight className="size-4" />}>
               Open Studio
             </ButtonLink>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={ShieldCheck} tone="emerald" size="sm" rounded="full" />} title="How integrity works" />
             <ul className="mt-3 space-y-2.5 text-sm text-ink-soft">
               {[
@@ -140,7 +140,7 @@ export default function AssessmentsPage() {
             </ul>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={FileQuestion} tone="blue" size="sm" rounded="full" />} title="Question source" />
             <p className="mt-3 text-sm leading-relaxed text-ink-soft">
               Items are drawn from curated, topic-tagged question banks behind a retrieval-shaped interface. Question order and option order are randomised per attempt.
@@ -155,7 +155,7 @@ export default function AssessmentsPage() {
 
 function AssessmentRow({ a, resumable, onDiscard }: { a: Assessment; resumable: boolean; onDiscard?: () => void }) {
   return (
-    <li className="flex flex-col gap-4 rounded-2xl border border-line p-4 sm:flex-row sm:items-center">
+    <li className="flex flex-col gap-4 rounded-xl border border-line p-4 sm:flex-row sm:items-center">
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <ProviderBadge provider={a.provider} />

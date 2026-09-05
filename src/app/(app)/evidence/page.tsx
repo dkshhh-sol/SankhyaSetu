@@ -35,7 +35,7 @@ export default function EvidencePage() {
   const pendingAssessments = EVIDENCE.filter((e) => e.status === "verified" && e.assessmentId && !state.results[e.assessmentId]).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Learning Evidence" }]}
         title="Learning Evidence"
@@ -43,7 +43,7 @@ export default function EvidencePage() {
         quote="Evidence-based learning drives better governance."
       />
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.7fr_1fr]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.7fr_1fr]">
         <div>
           <Tabs
             value={filter}
@@ -62,18 +62,18 @@ export default function EvidencePage() {
           </ul>
         </div>
 
-        <div className="space-y-5">
-          <Card className="p-5 sm:p-6">
+        <div className="space-y-4">
+          <Card className="p-4 sm:p-5">
             <div className="flex items-start gap-4">
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
                 <CheckCircle2 className="size-8" strokeWidth={2.2} aria-hidden />
               </span>
               <div>
-                <h2 className="font-display text-lg font-bold text-ink">Verified Learning Evidence</h2>
+                <h2 className="font-display text-[15px] font-semibold text-ink">Verified Learning Evidence</h2>
                 <p className="mt-1 text-sm text-ink-soft">Your completed learning is automatically verified through iGOT Karmayogi and NSSTA/TPAC integrations.</p>
               </div>
             </div>
-            <dl className="mt-5 grid grid-cols-3 divide-x divide-line border-t border-line pt-4">
+            <dl className="mt-4 grid grid-cols-3 divide-x divide-line border-t border-line pt-4">
               {[
                 { icon: BookOpen, n: verified, k: "Verified" },
                 { icon: Clock, n: inProgress, k: "In Progress" },
@@ -82,7 +82,7 @@ export default function EvidencePage() {
                 <div key={s.k} className="flex items-center justify-center gap-2.5 px-2">
                   <s.icon className="size-6 text-brand-600" aria-hidden />
                   <div>
-                    <dd className="font-display text-2xl font-extrabold leading-none text-ink">{s.n}</dd>
+                    <dd className="font-display text-xl font-bold leading-none text-ink">{s.n}</dd>
                     <dt className="text-xs text-ink-muted">{s.k}</dt>
                   </div>
                 </div>
@@ -90,10 +90,10 @@ export default function EvidencePage() {
             </dl>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <div className="flex items-center gap-3">
               <IconTile icon={Info} tone="blue" size="sm" rounded="full" />
-              <h2 className="font-display text-base font-bold text-ink">How verification works?</h2>
+              <h2 className="font-display text-sm font-semibold text-ink">How verification works?</h2>
             </div>
             <ol className="mt-4 space-y-4">
               {VERIFICATION_STEPS.map((s, i) => (
@@ -109,13 +109,13 @@ export default function EvidencePage() {
             </Link>
           </Card>
 
-          <Card className="border-emerald-100 bg-emerald-50/60 p-5 sm:p-6">
+          <Card className="border-emerald-100 bg-emerald-50/60 p-4 sm:p-5">
             <div className="flex items-start gap-4">
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
                 <BarChart3 className="size-6" aria-hidden />
               </span>
               <div>
-                <h2 className="font-display text-lg font-bold text-ink">Next Step</h2>
+                <h2 className="font-display text-[15px] font-semibold text-ink">Next Step</h2>
                 <p className="mt-1 text-sm text-ink-soft">
                   {pendingAssessments > 0
                     ? `You have ${pendingAssessments} verified ${pendingAssessments === 1 ? "learning" : "learnings"} with pending assessments. Take the assessment to update your competency profile.`
@@ -151,13 +151,13 @@ function EvidenceRow({ record, completedAssessment }: { record: EvidenceRecord; 
       <Link
         href={href}
         className={cn(
-          "flex items-center gap-4 rounded-2xl border border-line bg-white p-4 shadow-card transition-colors hover:border-brand-200",
+          "flex items-center gap-4 rounded-xl border border-line bg-white p-4 shadow-card transition-colors hover:border-brand-200",
           record.status === "in-progress" && "border-amber-100",
         )}
       >
         <ProviderTile record={record} />
         <div className="min-w-0 flex-1">
-          <p className="font-display text-[15px] font-bold leading-snug text-ink sm:text-base">{record.title}</p>
+          <p className="font-display text-sm font-semibold leading-snug text-ink">{record.title}</p>
           <p className="text-sm text-ink-muted">{record.providerLabel}</p>
           <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-ink-soft">
             <span className="inline-flex items-center gap-1.5">
@@ -189,7 +189,7 @@ function EvidenceRow({ record, completedAssessment }: { record: EvidenceRecord; 
 
 function ProviderTile({ record }: { record: EvidenceRecord }) {
   if (record.tile === "python") {
-    return <img src="/images/course-python-large.png" alt="" className="size-[72px] shrink-0 rounded-xl object-cover" draggable={false} />;
+    return <img src="/images/course-python-large.png" alt="" className="size-14 shrink-0 rounded-xl object-cover" draggable={false} />;
   }
   const tone =
     record.provider === "iGOT"
@@ -198,7 +198,7 @@ function ProviderTile({ record }: { record: EvidenceRecord }) {
         ? "bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-700"
         : "bg-gradient-to-br from-violet-50 to-violet-100 text-violet-700";
   return (
-    <span className={cn("flex size-[72px] shrink-0 items-center justify-center rounded-xl font-display text-lg font-extrabold", tone)} aria-hidden>
+    <span className={cn("flex size-14 shrink-0 items-center justify-center rounded-xl font-display text-base font-bold", tone)} aria-hidden>
       {record.provider}
     </span>
   );

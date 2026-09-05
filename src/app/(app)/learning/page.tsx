@@ -50,7 +50,7 @@ export default function LearningPage() {
   const active = TABS.find((t) => t.id === tab)!;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Learning Path" }]}
         title={
@@ -63,31 +63,31 @@ export default function LearningPage() {
       />
 
       {/* Journey */}
-      <Card className="p-5 sm:p-6">
+      <Card className="p-4 sm:p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <IconTile icon={TrendingUp} tone="blue" size="lg" rounded="full" />
             <div>
-              <h2 className="font-display text-lg font-bold text-ink sm:text-xl">From Assessment to Impact</h2>
-              <p className="text-sm text-ink-soft sm:text-base">Build the skills you need. Earn verifiable evidence. Contribute to a data-driven India.</p>
+              <h2 className="font-display text-base font-semibold text-ink">From Assessment to Impact</h2>
+              <p className="text-sm text-ink-soft">Build the skills you need. Earn verifiable evidence. Contribute to a data-driven India.</p>
             </div>
           </div>
           <ButtonLink href="/evidence" variant="outline" size="sm" rightIcon={<ChevronRight className="size-4" />}>
             View Full Path
           </ButtonLink>
         </div>
-        <div className="mt-6 overflow-x-auto scrollbar-thin">
+        <div className="mt-4 overflow-x-auto scrollbar-thin">
           <Stepper className="min-w-[560px]" steps={LEARNING_JOURNEY.map((s) => ({ title: s.title, subtitle: s.subtitle }))} current={2} />
         </div>
       </Card>
 
       {/* Recommended */}
-      <Card className="p-5 sm:p-6">
+      <Card className="p-4 sm:p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <IconTile icon={GraduationCap} tone="blue" size="lg" rounded="full" />
             <div>
-              <h2 className="font-display text-lg font-bold text-ink sm:text-xl">Recommended for You</h2>
+              <h2 className="font-display text-base font-semibold text-ink">Recommended for You</h2>
               <p className="text-sm text-ink-soft">Based on your competency profile and role requirements</p>
             </div>
           </div>
@@ -96,14 +96,14 @@ export default function LearningPage() {
           </button>
         </div>
         {why && (
-          <div className="mt-4 rounded-2xl border border-brand-100 bg-brand-50 p-4 text-sm leading-relaxed text-ink-soft">
+          <div className="mt-4 rounded-xl border border-brand-100 bg-brand-50 p-4 text-sm leading-relaxed text-ink-soft">
             Recommendations are ranked by the size of your skill gap against your role&rsquo;s required level, then filtered
             to programmes from iGOT Karmayogi, NSSTA and TPAC that address that skill. High-priority gaps (1.4 or more below
             the requirement) surface first. Completing a programme unlocks its assessment; only a valid, passed assessment
             updates your competency.
           </div>
         )}
-        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {RECOMMENDED_COURSES.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
@@ -132,10 +132,10 @@ export default function LearningPage() {
             );
           })}
         </div>
-        <div className="p-5 sm:p-6">
+        <div className="p-4 sm:p-5">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h2 className="font-display text-lg font-bold text-ink">{active.title}</h2>
+              <h2 className="font-display text-[15px] font-semibold text-ink">{active.title}</h2>
               <p className="text-sm text-ink-soft">{active.blurb}</p>
             </div>
             <LinkArrow href={tab === "All" ? "/learning" : `/learning?provider=${tab}`}>View All {tab === "All" ? "Programmes" : `${tab} Courses`}</LinkArrow>
@@ -167,9 +167,9 @@ export default function LearningPage() {
           </div>
 
           {list.length === 0 ? (
-            <p className="mt-8 rounded-2xl bg-surface p-8 text-center text-sm text-ink-muted">No programmes match these filters.</p>
+            <p className="mt-8 rounded-xl bg-surface p-8 text-center text-sm text-ink-muted">No programmes match these filters.</p>
           ) : (
-            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {list.map((course) => (
                 <CourseCard key={course.id} course={course} variant="catalogue" />
               ))}
@@ -182,7 +182,7 @@ export default function LearningPage() {
         <div className="flex items-center gap-4">
           <IconTile icon={GraduationCap} tone="blue" size="lg" rounded="full" />
           <div>
-            <p className="font-display text-base font-bold text-ink">Looking for a specific skill or programme?</p>
+            <p className="font-display text-sm font-semibold text-ink">Looking for a specific skill or programme?</p>
             <p className="text-sm text-ink-soft">Explore our full catalogue of iGOT, NSSTA and TPAC programmes.</p>
           </div>
         </div>

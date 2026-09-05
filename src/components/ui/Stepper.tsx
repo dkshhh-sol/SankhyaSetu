@@ -29,25 +29,25 @@ export function Stepper({ steps, current, className, compact }: StepperProps) {
               <span
                 aria-hidden
                 className={cn(
-                  "absolute right-1/2 top-4 h-0.5 w-full -translate-y-1/2",
+                  "absolute right-1/2 top-3.5 h-0.5 w-full -translate-y-1/2",
                   done || active ? "bg-brand-600" : "bg-slate-200",
                 )}
               />
             )}
             <span
               className={cn(
-                "relative z-10 flex size-8 items-center justify-center rounded-full text-sm font-bold ring-4 ring-white",
+                "relative z-10 flex size-7 items-center justify-center rounded-full text-xs font-semibold ring-4 ring-white",
                 done && "bg-brand-600 text-white",
                 active && "bg-brand-600 text-white shadow-[0_0_0_4px_rgba(29,95,196,0.15)]",
                 !done && !active && "bg-slate-100 text-ink-muted",
               )}
             >
-              {done ? <Check className="size-4" strokeWidth={3} /> : n}
+              {done ? <Check className="size-3.5" strokeWidth={3} /> : n}
             </span>
             <p
               className={cn(
-                "mt-2 px-1 leading-snug",
-                compact ? "text-xs" : "text-xs sm:text-sm",
+                "mt-1.5 px-1 leading-snug",
+                compact ? "text-[11px]" : "text-xs sm:text-[13px]",
                 active ? "font-semibold text-brand-700" : done ? "font-semibold text-ink" : "font-medium text-ink-soft",
               )}
             >

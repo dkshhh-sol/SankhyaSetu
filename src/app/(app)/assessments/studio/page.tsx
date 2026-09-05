@@ -151,25 +151,25 @@ export default function StudioPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Assessments", href: "/assessments" }, { label: "Create Assessment" }]}
         title="Assessment Studio"
         subtitle="Create high-quality assessments from learning materials to verify competency gains."
       />
 
-      <Card className="p-5 sm:p-6">
+      <Card className="p-4 sm:p-5">
         <div className="overflow-x-auto scrollbar-thin">
           <Stepper className="min-w-[560px]" steps={STEPS} current={currentStep} />
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.75fr_1fr]">
-        <div className="space-y-5">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.75fr_1fr]">
+        <div className="space-y-4">
           {/* Step 1 */}
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <StepTitle n={1} title="Upload Learning Material" subtitle="Upload course material (PDF, PPT, DOC) or use curriculum details to generate questions." />
-            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
               <div
                 role="button"
                 tabIndex={0}
@@ -182,11 +182,11 @@ export default function StudioPage() {
                 onDragLeave={() => setDragging(false)}
                 onDrop={onDrop}
                 className={cn(
-                  "flex min-h-[180px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center transition-colors",
+                  "flex min-h-[150px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-4 text-center transition-colors",
                   dragging ? "border-brand-500 bg-brand-50" : "border-brand-200 bg-brand-50/40 hover:bg-brand-50",
                 )}
               >
-                <CloudUpload className="size-12 text-brand-500" strokeWidth={1.6} aria-hidden />
+                <CloudUpload className="size-9 text-brand-500" strokeWidth={1.6} aria-hidden />
                 <p className="mt-3 text-sm font-medium text-ink">
                   Drag and drop files here, or <span className="font-semibold text-brand-600">click to upload</span>
                 </p>
@@ -200,7 +200,7 @@ export default function StudioPage() {
                   onChange={(e) => e.target.files && addFiles(e.target.files)}
                 />
               </div>
-              <div className="rounded-2xl border border-line p-4">
+              <div className="rounded-xl border border-line p-4">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-bold text-ink">Uploaded Files ({files.length})</p>
                   {files.length > 0 && (
@@ -230,9 +230,9 @@ export default function StudioPage() {
           </Card>
 
           {/* Step 2 */}
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <StepTitle n={2} title="Configure Assessment" subtitle="Set the parameters for your assessment." />
-            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-[2fr_1fr]">
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[2fr_1fr]">
               <div>
                 <Label htmlFor="title">Assessment Title</Label>
                 <TextInput id="title" value={title} onChange={(e) => setCustomTitle(e.target.value)} />
@@ -291,9 +291,9 @@ export default function StudioPage() {
           </Card>
 
           {/* Step 3 */}
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <StepTitle n={3} title="Review & Generate" subtitle="Review your settings and generate the assessment." />
-            <div className="mt-5 flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between">
+            <div className="mt-4 flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between">
               <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 {[
                   { icon: FileText, v: count, k: "Questions" },
@@ -302,7 +302,7 @@ export default function StudioPage() {
                   { icon: FileText, v: `${files.length} Files`, k: "Processing with RAG" },
                 ].map((m) => (
                   <div key={m.k} className="flex min-w-0 items-center gap-2.5 rounded-xl border border-line px-3 py-2.5">
-                    <m.icon className="size-5 shrink-0 text-brand-600" aria-hidden />
+                    <m.icon className="size-4.5 shrink-0 text-brand-600" aria-hidden />
                     <div className="min-w-0">
                       <dd className="truncate text-sm font-bold text-ink">{m.v}</dd>
                       <dt className="text-[11px] text-ink-muted">{m.k}</dt>
@@ -322,7 +322,7 @@ export default function StudioPage() {
             </div>
 
             {generated && (
-              <div className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4">
+              <div className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/60 p-4">
                 <p className="flex items-center gap-2 text-sm font-bold text-ink">
                   <CheckCircle2 className="size-5 text-emerald-500" aria-hidden /> {generated.length} questions assembled from the {bank.label} bank
                 </p>
@@ -341,9 +341,9 @@ export default function StudioPage() {
         </div>
 
         {/* Right column */}
-        <div className="space-y-5">
-          <Card className="p-5 sm:p-6">
-            <h2 className="font-display text-lg font-bold text-ink">Material Processing (RAG Pipeline)</h2>
+        <div className="space-y-4">
+          <Card className="p-4 sm:p-5">
+            <h2 className="font-display text-[15px] font-semibold text-ink">Material Processing (RAG Pipeline)</h2>
             <ul className="mt-4 space-y-3">
               {PIPELINE.map((label, i) => {
                 const done = pipelineStep > i + (i === 3 ? 0 : 0) && (i < 3 ? pipelineStep >= i + 1 : pipelineStep >= 4);
@@ -365,17 +365,17 @@ export default function StudioPage() {
             <Badge tone="slate" className="mt-4">Prototype: retrieval simulated with curated banks</Badge>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="flex size-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                   <MessageSquareText className="size-4.5" aria-hidden />
                 </span>
-                <h2 className="font-display text-lg font-bold text-ink">Question Preview</h2>
+                <h2 className="font-display text-[15px] font-semibold text-ink">Question Preview</h2>
               </div>
               <span className="text-sm font-semibold text-brand-600">{bank.label}</span>
             </div>
-            <div className="mt-4 rounded-2xl bg-brand-50/60 p-4">
+            <div className="mt-4 rounded-xl bg-brand-50/60 p-4">
               <p className="text-sm font-semibold text-ink">
                 <span className="mr-2 text-ink-muted">Q 1.</span>
                 {preview.prompt}
@@ -397,12 +397,12 @@ export default function StudioPage() {
             </div>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <div className="flex items-center gap-3">
               <span className="flex size-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <Info className="size-4.5" aria-hidden />
               </span>
-              <h2 className="font-display text-lg font-bold text-ink">Guidelines</h2>
+              <h2 className="font-display text-[15px] font-semibold text-ink">Guidelines</h2>
             </div>
             <ul className="mt-3 space-y-2 text-sm text-ink-soft">
               {[
@@ -426,9 +426,9 @@ export default function StudioPage() {
 function StepTitle({ n, title, subtitle }: { n: number; title: string; subtitle: string }) {
   return (
     <div className="flex items-start gap-4">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-600 font-display text-base font-bold text-white">{n}</span>
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-600 font-display text-sm font-semibold text-white">{n}</span>
       <div>
-        <h2 className="font-display text-lg font-bold text-ink">{title}</h2>
+        <h2 className="font-display text-[15px] font-semibold text-ink">{title}</h2>
         <p className="text-sm text-ink-soft">{subtitle}</p>
       </div>
     </div>
@@ -438,7 +438,7 @@ function StepTitle({ n, title, subtitle }: { n: number; title: string; subtitle:
 function FileIcon({ kind }: { kind: UploadedFile["kind"] }) {
   const cls = kind === "pdf" ? "bg-red-100 text-red-600" : kind === "ppt" ? "bg-orange-100 text-orange-600" : "bg-blue-100 text-blue-600";
   return (
-    <span className={cn("flex size-9 shrink-0 items-center justify-center rounded-lg text-[10px] font-extrabold uppercase", cls)} aria-hidden>
+    <span className={cn("flex size-9 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold uppercase", cls)} aria-hidden>
       {kind}
     </span>
   );

@@ -19,7 +19,7 @@ export default function ProgressPage() {
   const providerName = u.assessment ? PROVIDER_FULL[u.assessment.provider] : "iGOT Karmayogi";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "My Competency", href: "/competency" }, { label: "Updated Profile" }]}
         title="Updated Competency Profile"
@@ -29,11 +29,11 @@ export default function ProgressPage() {
 
       <Card className={cn("flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between", u.applied ? "border-emerald-100 bg-emerald-50/60" : "border-amber-100 bg-amber-50/60")}>
         <div className="flex items-center gap-4">
-          <span className={cn("flex size-14 shrink-0 items-center justify-center rounded-full text-white", u.applied ? "bg-emerald-500" : "bg-amber-500")}>
-            <CheckCircle2 className="size-8" aria-hidden />
+          <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-full text-white", u.applied ? "bg-emerald-500" : "bg-amber-500")}>
+            <CheckCircle2 className="size-6" aria-hidden />
           </span>
           <div>
-            <p className="font-display text-lg font-bold text-ink">{u.applied ? "Your competency profile has been updated!" : "Your latest attempt did not update your profile."}</p>
+            <p className="font-display text-[15px] font-semibold text-ink">{u.applied ? "Your competency profile has been updated!" : "Your latest attempt did not update your profile."}</p>
             <p className="text-sm text-ink-soft">
               {u.applied
                 ? "Based on your verified learning and assessment performance, the following competencies have been updated."
@@ -50,14 +50,14 @@ export default function ProgressPage() {
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.5fr_1fr]">
         <div className="space-y-4">
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader
               icon={<IconTile icon={BarChart3} tone="blue" rounded="full" />}
               title="Competency Comparison"
               subtitle="See how your competencies have improved."
               action={<Legend />}
             />
-            <ul className="mt-5 space-y-4">
+            <ul className="mt-4 space-y-4">
               {u.rows.slice(0, 4).map((r) => (
                 <li key={r.skillId} className="grid grid-cols-1 gap-2 sm:grid-cols-[170px_1fr_90px] sm:items-center sm:gap-4">
                   <span className="text-sm font-medium text-ink">{r.name}</span>
@@ -80,7 +80,7 @@ export default function ProgressPage() {
             </ul>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader
               icon={<IconTile icon={UserCircle} tone="blue" rounded="full" />}
               title="Your Competency Profile"
@@ -89,8 +89,8 @@ export default function ProgressPage() {
             />
             <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr] lg:items-center">
               <SkillRadar data={u.rows.map((r) => ({ name: r.name.replace(" & Methodology", ""), before: r.before, after: r.after }))} />
-              <div className="rounded-2xl bg-surface p-4">
-                <p className="font-display text-sm font-bold text-ink">Competency Levels</p>
+              <div className="rounded-xl bg-surface p-4">
+                <p className="font-display text-sm font-semibold text-ink">Competency Levels</p>
                 <ul className="mt-3 space-y-2.5 text-sm">
                   {COMPETENCY_LEVELS.map((l) => (
                     <li key={l.label} className="flex items-center gap-3">
@@ -106,7 +106,7 @@ export default function ProgressPage() {
         </div>
 
         <div className="space-y-4">
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Trophy} tone="amber" rounded="full" />} title="Key Highlights" />
             <div className="mt-4 grid grid-cols-2 gap-3">
               {[
@@ -115,10 +115,10 @@ export default function ProgressPage() {
                 { icon: Target, tone: "blue" as const, v: u.overallAfter.toFixed(1), k: "Overall Competency", s: `Score (${u.overallAfter >= u.overallBefore ? "+" : ""}${(u.overallAfter - u.overallBefore).toFixed(1)})` },
                 { icon: ClipboardCheck, tone: "violet" as const, v: `${u.scorePct}%`, k: "Assessment", s: "Score" },
               ].map((h) => (
-                <div key={h.k + h.s} className="rounded-2xl border border-line p-3.5">
+                <div key={h.k + h.s} className="rounded-xl border border-line p-3.5">
                   <div className="flex items-center gap-3">
                     <IconTile icon={h.icon} tone={h.tone} size="sm" rounded="full" />
-                    <p className="font-display text-2xl font-extrabold leading-none text-ink">{h.v}</p>
+                    <p className="font-display text-xl font-bold leading-none text-ink">{h.v}</p>
                   </div>
                   <p className="mt-2 text-xs text-ink-soft">{h.k}</p>
                   <p className="text-xs text-ink-muted">{h.s}</p>
@@ -127,12 +127,12 @@ export default function ProgressPage() {
             </div>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={BookOpen} tone="blue" rounded="full" />} title="Verified Learning Used" />
-            <div className="mt-4 flex gap-4 rounded-2xl border border-line p-4">
-              <span className="flex h-16 w-20 shrink-0 items-center justify-center rounded-xl bg-brand-50 font-display text-lg font-extrabold text-brand-700">{u.assessment?.provider ?? "iGOT"}</span>
+            <div className="mt-4 flex gap-4 rounded-xl border border-line p-4">
+              <span className="flex h-12 w-16 shrink-0 items-center justify-center rounded-lg bg-brand-50 font-display text-base font-bold text-brand-700">{u.assessment?.provider ?? "iGOT"}</span>
               <div className="min-w-0">
-                <p className="font-display text-[15px] font-bold leading-snug text-ink">{u.assessment?.linkedCourseTitle}</p>
+                <p className="font-display text-sm font-semibold leading-snug text-ink">{u.assessment?.linkedCourseTitle}</p>
                 <p className="mt-0.5 text-xs text-ink-muted">{u.evidence ? `Completed on ${u.evidence.date}` : providerName}</p>
                 <ul className="mt-2 space-y-1 text-xs text-ink-soft">
                   <li className="flex items-center gap-1.5"><CheckCircle2 className="size-3.5 text-emerald-500" /> Course completion verified (via {u.assessment?.provider ?? "iGOT"})</li>
@@ -144,7 +144,7 @@ export default function ProgressPage() {
             </div>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Compass} tone="blue" rounded="full" />} title="Next Steps" subtitle="Keep building your skills! Here are your next recommended actions." />
             <ul className="mt-4 space-y-2.5">
               {[

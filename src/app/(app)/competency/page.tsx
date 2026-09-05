@@ -44,7 +44,7 @@ export default function CompetencyPage() {
   ].slice(0, 4);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "My Competency" }]}
         title="My Competency Profile"
@@ -54,13 +54,13 @@ export default function CompetencyPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard icon={BarChart3} tone="blue" title="Overall Competency Level">
-          <div className="mt-3 flex items-center gap-4">
-            <Donut value={c.overall / 5} size={96} stroke={10}>
-              <span className="font-display text-2xl font-extrabold leading-none text-ink">{c.overall.toFixed(1)}</span>
+          <div className="mt-2 flex items-center gap-3">
+            <Donut value={c.overall / 5} size={64} stroke={7}>
+              <span className="font-display text-lg font-bold leading-none text-ink">{c.overall.toFixed(1)}</span>
               <span className="text-[11px] text-ink-muted">/ 5.0</span>
             </Donut>
             <div>
-              <p className="font-display text-lg font-bold text-ink">{overallLabel(c.overall)}</p>
+              <p className="font-display text-[15px] font-semibold text-ink">{overallLabel(c.overall)}</p>
               <p className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-emerald-600">
                 <TrendingUp className="size-4" aria-hidden /> +{c.overallDelta.toFixed(1)}
               </p>
@@ -72,7 +72,7 @@ export default function CompetencyPage() {
         <StatCard icon={Target} tone="rose" title="Focus Areas" value={c.gapCounts.High} caption="High-priority skill gaps" />
         <StatCard icon={CalendarDays} tone="blue" title="Last Updated">
           <div className="mt-3">
-            <p className="font-display text-[26px] font-extrabold leading-none text-ink">
+            <p className="font-display text-xl font-bold leading-none text-ink">
               {c.lastUpdated ? formatDate(c.lastUpdated) : LAST_UPDATED}
             </p>
             <p className="mt-2 text-sm text-ink-soft">Based on latest assessments and learning activity</p>
@@ -81,14 +81,14 @@ export default function CompetencyPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.35fr_1fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Competency by Domain" action={<LinkArrow href="/learning">View Role Requirements</LinkArrow>} />
           <div className="mt-4">
             <CompetencyBarChart domains={c.domains} />
           </div>
         </Card>
 
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Skill Gap Analysis" action={<LinkArrow href="/learning">View All Gaps</LinkArrow>} />
           <Tabs
             variant="pills"
@@ -134,7 +134,7 @@ export default function CompetencyPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.15fr_1fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Assessment History" action={<LinkArrow href="/assessments">View All Assessments</LinkArrow>} />
           <div className="mt-4 overflow-x-auto scrollbar-thin">
             <table className="w-full min-w-[520px] text-sm">
@@ -150,15 +150,15 @@ export default function CompetencyPage() {
               <tbody className="divide-y divide-line">
                 {history.map((h) => (
                   <tr key={h.id}>
-                    <td className="px-3 py-3 text-ink-soft">{h.date}</td>
-                    <td className="px-3 py-3 font-medium text-ink">{h.name}</td>
+                    <td className="px-3 py-2.5 text-ink-soft">{h.date}</td>
+                    <td className="px-3 py-2.5 font-medium text-ink">{h.name}</td>
                     <td className="px-3 py-3">
                       <span className="inline-flex items-center gap-2 text-ink-soft">
                         <IconTile icon={FileText} tone={h.type === "Quiz" ? "blue" : "emerald"} size="sm" /> {h.type}
                       </span>
                     </td>
                     <td className={`px-3 py-3 font-bold ${h.score >= 80 ? "text-emerald-600" : h.score >= 70 ? "text-amber-500" : "text-orange-500"}`}>{h.score}%</td>
-                    <td className="px-3 py-3 font-semibold text-ink">
+                    <td className="px-3 py-2.5 font-semibold text-ink">
                       {h.improved ? (
                         <span className="inline-flex items-center gap-1 text-emerald-600">
                           <TrendingUp className="size-4" aria-hidden /> {h.level.toFixed(1)}
@@ -174,14 +174,14 @@ export default function CompetencyPage() {
           </div>
         </Card>
 
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader title="Recommended Next Steps" action={<LinkArrow href="/learning">View Learning Path</LinkArrow>} />
           <ul className="mt-4 space-y-3">
             {RECOMMENDED_COURSES.slice(0, 3).map((course) => (
-              <li key={course.id} className="flex flex-col gap-3 rounded-2xl border border-line p-3.5 sm:flex-row sm:items-center">
-                <img src={course.image} alt="" className="size-12 shrink-0 rounded-xl object-cover" draggable={false} />
+              <li key={course.id} className="flex flex-col gap-3 rounded-xl border border-line p-3.5 sm:flex-row sm:items-center">
+                <img src={course.image} alt="" className="size-10 shrink-0 rounded-lg object-cover" draggable={false} />
                 <div className="min-w-0 flex-1">
-                  <p className="font-display text-[15px] font-bold leading-snug text-ink">{course.title}</p>
+                  <p className="font-display text-sm font-semibold leading-snug text-ink">{course.title}</p>
                   <p className="mt-1 flex flex-wrap items-center gap-x-2 text-xs text-ink-muted">
                     <ProviderBadge provider={course.provider} />
                     <span>{course.duration}</span>

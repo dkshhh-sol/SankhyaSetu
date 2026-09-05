@@ -16,13 +16,13 @@ export function LinkArrow({ href, children, className, size = "sm" }: LinkArrowP
     <Link
       href={href}
       className={cn(
-        "group inline-flex items-center gap-1.5 font-semibold text-brand-600 hover:text-brand-700",
-        size === "sm" ? "text-sm" : "text-base",
+        "group inline-flex items-center gap-1 font-medium text-brand-600 hover:text-brand-700",
+        size === "sm" ? "text-[13px]" : "text-sm",
         className,
       )}
     >
       {children}
-      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+      <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
     </Link>
   );
 }

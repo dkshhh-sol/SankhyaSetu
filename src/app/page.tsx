@@ -11,7 +11,7 @@ import { LoginPanel } from "@/components/login/LoginPanel";
  */
 export default function LoginPage() {
   return (
-    <main className="flex min-h-screen flex-col-reverse lg:grid lg:grid-cols-[54fr_46fr]">
+    <main className="flex min-h-screen flex-col-reverse lg:grid lg:h-screen lg:grid-cols-[54fr_46fr] lg:grid-rows-1 lg:overflow-hidden">
       <HeroPanel />
       <LoginPanel />
     </main>

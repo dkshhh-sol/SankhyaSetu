@@ -6,7 +6,7 @@ type Variant = "primary" | "outline" | "ghost" | "danger" | "soft" | "navy";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold whitespace-nowrap " +
+  "inline-flex items-center justify-center gap-1.5 rounded-lg font-semibold whitespace-nowrap " +
   "transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-60 " +
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2";
 
@@ -20,10 +20,11 @@ const variants: Record<Variant, string> = {
   danger: "bg-red-500 text-white shadow-sm hover:bg-red-600 active:bg-red-700",
 };
 
+/* Enterprise control sizes: sm 32px, md 36px, lg 40px. */
 const sizes: Record<Size, string> = {
-  sm: "h-9 px-3.5 text-sm",
-  md: "h-11 px-5 text-sm",
-  lg: "h-12 px-6 text-base",
+  sm: "h-8 px-3 text-[13px]",
+  md: "h-9 px-4 text-sm",
+  lg: "h-10 px-5 text-sm",
 };
 
 interface CommonProps {
@@ -58,7 +59,7 @@ export function Button({
     >
       {loading ? (
         <span
-          className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+          className="size-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"
           aria-hidden
         />
       ) : (

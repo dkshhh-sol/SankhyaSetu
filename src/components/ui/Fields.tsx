@@ -6,7 +6,7 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react
 
 export function Label({ children, className, htmlFor }: { children: ReactNode; className?: string; htmlFor?: string }) {
   return (
-    <label htmlFor={htmlFor} className={cn("mb-1.5 block text-sm font-semibold text-ink", className)}>
+    <label htmlFor={htmlFor} className={cn("mb-1 block text-xs font-medium text-ink", className)}>
       {children}
     </label>
   );
@@ -16,7 +16,7 @@ export function TextInput({ className, ...props }: InputHTMLAttributes<HTMLInput
   return (
     <input
       className={cn(
-        "h-11 w-full rounded-xl border border-line bg-white px-3.5 text-sm text-ink placeholder:text-ink-muted/70 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100",
+        "h-9 w-full rounded-lg border border-line bg-white px-3 text-sm text-ink placeholder:text-ink-muted/70 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100",
         className,
       )}
       {...props}
@@ -29,7 +29,7 @@ export function Select({ className, children, ...props }: SelectHTMLAttributes<H
     <div className="relative">
       <select
         className={cn(
-          "h-11 w-full appearance-none rounded-xl border border-line bg-white pl-3.5 pr-10 text-sm font-medium text-ink focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100",
+          "h-9 w-full appearance-none rounded-lg border border-line bg-white pl-3 pr-9 text-sm font-medium text-ink focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100",
           className,
         )}
         {...props}

@@ -21,14 +21,14 @@ export default function SettingsPage() {
   const [prefs, setPrefs] = useState({ verification: true, assessments: true, recommendations: false, digest: true });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Settings" }]} title="Settings" subtitle="Your profile, notification preferences and prototype controls." />
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.4fr_1fr]">
         <div className="space-y-4">
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={UserCircle} tone="blue" rounded="full" />} title="Profile" subtitle="Provided by Parichay at sign-in." />
-            <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Avatar initials={session?.initials ?? "?"} tone={accent} size="lg" />
               <dl className="grid flex-1 grid-cols-1 gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
                 {[
@@ -48,7 +48,7 @@ export default function SettingsPage() {
             </div>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Bell} tone="amber" rounded="full" />} title="Notifications" />
             <ul className="mt-4 divide-y divide-line">
               {[
@@ -70,7 +70,7 @@ export default function SettingsPage() {
         </div>
 
         <div className="space-y-4">
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Shield} tone="violet" rounded="full" />} title="Prototype controls" />
             <p className="mt-3 text-sm text-ink-soft">This build stores your journey (attempts, results, competency updates, studio assessments) in this browser tab only.</p>
             <dl className="mt-4 grid grid-cols-3 gap-3 text-center">
@@ -80,7 +80,7 @@ export default function SettingsPage() {
                 ["Studio", state.customAssessments.length],
               ].map(([k, v]) => (
                 <div key={k} className="rounded-xl bg-surface p-3">
-                  <dd className="font-display text-xl font-extrabold text-ink">{v}</dd>
+                  <dd className="font-display text-lg font-bold text-ink">{v}</dd>
                   <dt className="text-xs text-ink-muted">{k}</dt>
                 </div>
               ))}
@@ -102,7 +102,7 @@ export default function SettingsPage() {
             </div>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader title="Integrations" />
             <ul className="mt-3 space-y-2 text-sm">
               {[

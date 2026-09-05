@@ -34,8 +34,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       <Header onMenu={() => setMenuOpen(true)} />
       <div className="flex">
         <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
-        <main className="min-w-0 flex-1 px-4 pb-16 pt-6 sm:px-6 lg:px-8 lg:pt-7">
-          <div key={pathname} className="mx-auto max-w-[1320px] animate-fade-up">
+        <main className="min-w-0 flex-1 px-4 pb-10 pt-4 sm:px-5 lg:px-7 lg:pt-5">
+          <div key={pathname} className="mx-auto max-w-[1600px] animate-fade-up">
             {children}
           </div>
         </main>

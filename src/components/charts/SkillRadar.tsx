@@ -10,7 +10,7 @@ export interface RadarPoint {
 
 export function SkillRadar({ data }: { data: RadarPoint[] }) {
   return (
-    <div className="h-72 w-full sm:h-80">
+    <div className="h-56 w-full sm:h-64">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data} outerRadius="62%" margin={{ top: 16, right: 48, bottom: 16, left: 48 }}>
           <PolarGrid stroke="#dbe3ee" />

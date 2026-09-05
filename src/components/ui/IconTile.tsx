@@ -22,10 +22,11 @@ interface IconTileProps {
   rounded?: "full" | "xl";
 }
 
+/* sm 28px / md 36px / lg 44px tiles with 14 / 18 / 20px glyphs. */
 const sizes = {
-  sm: { box: "size-8", icon: "size-4" },
-  md: { box: "size-10", icon: "size-5" },
-  lg: { box: "size-12", icon: "size-6" },
+  sm: { box: "size-7", icon: "size-3.5" },
+  md: { box: "size-9", icon: "size-[18px]" },
+  lg: { box: "size-11", icon: "size-5" },
 };
 
 /** Soft-tinted square/circle behind an icon; used on stat cards and list rows. */
@@ -34,7 +35,7 @@ export function IconTile({ icon: Icon, tone = "blue", size = "md", className, ro
     <span
       className={cn(
         "flex shrink-0 items-center justify-center",
-        rounded === "full" ? "rounded-full" : "rounded-xl",
+        rounded === "full" ? "rounded-full" : "rounded-lg",
         sizes[size].box,
         tones[tone],
         className,

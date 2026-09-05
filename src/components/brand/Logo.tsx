@@ -19,7 +19,7 @@ export function Logo({
 }: LogoProps) {
   return (
     <div className={cn("flex items-center gap-3", className)}>
-      <LogoMark className="h-9 w-auto shrink-0" />
+      <LogoMark className="h-7 w-auto shrink-0" />
       <div className="leading-none">
         <span
           className={cn(
@@ -30,7 +30,7 @@ export function Logo({
           Sankhya<span className="text-brand-600">Setu</span>
         </span>
         {showTagline && (
-          <p className="mt-1 text-xs font-medium tracking-wide text-ink-muted">
+          <p className="mt-0.5 text-[10px] font-medium tracking-wide text-ink-muted">
             Skills. Evidence. Impact.
           </p>
         )}

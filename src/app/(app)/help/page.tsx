@@ -38,11 +38,11 @@ const FAQ = [
 export default function HelpPage() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Help & Support" }]} title="Help & Support" subtitle="Answers to common questions and ways to reach the SankhyaSetu team." />
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.6fr_1fr]">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-4 sm:p-5">
           <CardHeader icon={<IconTile icon={LifeBuoy} tone="blue" rounded="full" />} title="Frequently asked questions" />
           <ul className="mt-4 divide-y divide-line" id="verification">
             {FAQ.map((f, i) => {
@@ -61,7 +61,7 @@ export default function HelpPage() {
         </Card>
 
         <div className="space-y-4">
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Mail} tone="emerald" rounded="full" />} title="Contact support" />
             <p className="mt-3 text-sm text-ink-soft">For technical issues during an assessment or problems with evidence verification.</p>
             <a href="mailto:support@sankhyasetu.demo.gov.in" className="mt-4 inline-flex h-11 items-center gap-2 rounded-xl border border-brand-200 bg-white px-4 text-sm font-semibold text-brand-700 hover:bg-brand-50">
@@ -70,7 +70,7 @@ export default function HelpPage() {
             <p className="mt-3 text-xs text-ink-muted">Prototype address for the SIH 2026 demo.</p>
           </Card>
 
-          <Card className="p-5 sm:p-6" id="privacy">
+          <Card className="p-4 sm:p-5" id="privacy">
             <CardHeader icon={<IconTile icon={ShieldCheck} tone="blue" rounded="full" />} title="Privacy" />
             <ul className="mt-3 space-y-2 text-sm text-ink-soft">
               <li>Identity is provided by Parichay SSO (simulated in this prototype).</li>

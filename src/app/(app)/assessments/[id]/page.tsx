@@ -63,7 +63,7 @@ export default function AssessmentStartPage() {
 
   if (!assessment) {
     return (
-      <div className="rounded-3xl bg-white p-10 text-center">
+      <div className="rounded-xl bg-white p-10 text-center">
         <p className="text-lg font-semibold text-ink">Assessment not found.</p>
         <Link href="/assessments" className="mt-3 inline-block text-brand-600 hover:underline">Back to assessments</Link>
       </div>
@@ -72,11 +72,11 @@ export default function AssessmentStartPage() {
 
   if (result) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4">
         <PageHeader crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Assessments", href: "/assessments" }, { label: assessment.title }]} title={assessment.title} />
         <Card className="p-8 text-center">
           <IconTile icon={CheckCircle2} tone="emerald" size="lg" rounded="full" className="mx-auto" />
-          <p className="mt-4 font-display text-xl font-bold text-ink">You have already completed this assessment.</p>
+          <p className="mt-4 font-display text-base font-semibold text-ink">You have already completed this assessment.</p>
           <p className="mt-1 text-sm text-ink-soft">Score {result.scorePct}% - integrity {result.integrity}.</p>
           <ButtonLink href={`/assessments/${id}/result`} className="mt-5" rightIcon={<ArrowRight className="size-4" />}>View Result</ButtonLink>
         </Card>
@@ -89,26 +89,26 @@ export default function AssessmentStartPage() {
   void assessments;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         crumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Assessments", href: "/assessments" }, { label: "Take Assessment" }]}
         title={assessment.title}
         subtitle={assessment.description}
         building={false}
         aside={
-          <div className="flex items-center gap-4 rounded-2xl border border-line bg-white p-3 pr-5 shadow-card">
-            <span className="flex h-12 w-16 items-center justify-center rounded-xl bg-brand-50 font-display text-lg font-extrabold text-brand-700">{assessment.provider}</span>
+          <div className="flex items-center gap-4 rounded-xl border border-line bg-white p-3 pr-5 shadow-card">
+            <span className="flex h-10 w-14 items-center justify-center rounded-lg bg-brand-50 font-display text-base font-bold text-brand-700">{assessment.provider}</span>
             <div>
-              <p className="font-display text-sm font-bold text-ink sm:text-base">{assessment.linkedCourseTitle}</p>
+              <p className="font-display text-sm font-semibold text-ink">{assessment.linkedCourseTitle}</p>
               <p className="text-xs text-ink-muted">Linked Course Assessment</p>
             </div>
           </div>
         }
       />
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.6fr_1fr]">
-        <div className="space-y-5">
-          <Card className="p-5 sm:p-6">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.6fr_1fr]">
+        <div className="space-y-4">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={ShieldCheck} tone="emerald" rounded="full" />} title="Before you begin" subtitle="This is a proctored assessment. Please read the rules carefully." />
             <ul className="mt-4 space-y-2.5">
               {ASSESSMENT_RULES.map((r) => (
@@ -117,7 +117,7 @@ export default function AssessmentStartPage() {
                 </li>
               ))}
             </ul>
-            <dl className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { icon: FileQuestion, v: assessment.questions.length, k: "Questions" },
                 { icon: Clock, v: `${assessment.timeLimitMin} min`, k: "Time limit" },
@@ -125,7 +125,7 @@ export default function AssessmentStartPage() {
                 { icon: AlertTriangle, v: "3 events", k: "Auto-submit at" },
               ].map((m) => (
                 <div key={m.k} className="flex items-center gap-2.5 rounded-xl bg-surface px-3 py-2.5">
-                  <m.icon className="size-5 shrink-0 text-brand-600" aria-hidden />
+                  <m.icon className="size-4.5 shrink-0 text-brand-600" aria-hidden />
                   <div>
                     <dd className="text-sm font-bold text-ink">{m.v}</dd>
                     <dt className="text-[11px] text-ink-muted">{m.k}</dt>
@@ -135,14 +135,14 @@ export default function AssessmentStartPage() {
             </dl>
           </Card>
 
-          <Card className="p-5 sm:p-6">
+          <Card className="p-4 sm:p-5">
             <CardHeader icon={<IconTile icon={Monitor} tone="blue" rounded="full" />} title="System check" subtitle="Grant camera and microphone access to enable live proctoring." />
             <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[220px_1fr]">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-ink">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-ink">
                 <video ref={videoRef} autoPlay muted playsInline className="size-full object-cover" />
                 {camera !== "ok" && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white/80">
-                    <Camera className="size-8" aria-hidden />
+                    <Camera className="size-6" aria-hidden />
                     <span className="text-xs">Camera preview</span>
                   </div>
                 )}
@@ -162,8 +162,8 @@ export default function AssessmentStartPage() {
           </Card>
         </div>
 
-        <div className="space-y-5">
-          <Card className="p-5 sm:p-6">
+        <div className="space-y-4">
+          <Card className="p-4 sm:p-5">
             <div className="flex flex-wrap items-center gap-2">
               <ProviderBadge provider={assessment.provider} />
               {assessment.createdAt && <Badge tone="violet">Studio</Badge>}
@@ -174,7 +174,7 @@ export default function AssessmentStartPage() {
             </p>
             <Checkbox className="mt-4 items-start" checked={agree} onChange={setAgree} label="I confirm I will attempt this assessment on my own, without external help, and I understand integrity events are recorded." />
             <Button
-              className="mt-5 w-full"
+              className="mt-4 w-full"
               size="lg"
               disabled={!ready || locked}
               rightIcon={<ArrowRight className="size-4" />}

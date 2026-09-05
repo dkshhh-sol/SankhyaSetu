@@ -21,7 +21,7 @@ interface TabsProps<T extends string> {
 export function Tabs<T extends string>({ items, value, onChange, className, variant = "segmented" }: TabsProps<T>) {
   if (variant === "pills") {
     return (
-      <div role="tablist" className={cn("flex flex-wrap gap-2", className)}>
+      <div role="tablist" className={cn("flex flex-wrap gap-1.5", className)}>
         {items.map((t) => {
           const active = t.id === value;
           return (
@@ -32,7 +32,7 @@ export function Tabs<T extends string>({ items, value, onChange, className, vari
               type="button"
               onClick={() => onChange(t.id)}
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors",
+                "inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors",
                 active ? "bg-brand-600 text-white" : "bg-slate-100 text-ink-soft hover:bg-slate-200",
               )}
             >
@@ -48,7 +48,7 @@ export function Tabs<T extends string>({ items, value, onChange, className, vari
     <div
       role="tablist"
       className={cn(
-        "no-scrollbar flex overflow-x-auto rounded-2xl border border-line bg-white p-1",
+        "no-scrollbar flex overflow-x-auto rounded-xl border border-line bg-white p-1",
         className,
       )}
     >
@@ -62,7 +62,7 @@ export function Tabs<T extends string>({ items, value, onChange, className, vari
             type="button"
             onClick={() => onChange(t.id)}
             className={cn(
-              "inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors sm:flex-1",
+              "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-colors sm:flex-1",
               active ? "bg-brand-50 text-brand-700 shadow-[inset_0_0_0_1px_var(--color-brand-200)]" : "text-ink-soft hover:bg-slate-50",
             )}
           >
