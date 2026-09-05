@@ -29,19 +29,43 @@ export default function DashboardPage() {
   const { session, state } = useAppStore();
   const c = useCompetency();
 
-  const activity = [
-    ...Object.values(state.results)
-      .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
-      .slice(0, 1)
-      .map((r) => ({
-        id: r.assessmentId,
-        kind: "assessment" as const,
-        title: r.passed && r.integrity !== "invalid" ? "Completed Assessment" : "Assessment Attempted",
-        detail: `${r.scorePct}% - ${r.integrity === "invalid" ? "integrity flagged" : r.passed ? "passed" : "not passed"}`,
-        when: "Just now",
-      })),
-    ...RECENT_ACTIVITY,
-  ].slice(0, 4);
+  /**
+   * An official who just completed onboarding has no platform history, so the
+   * seeded demo activity and evidence counts would contradict the account.
+   * Their dashboard is driven entirely by the baseline they just produced.
+   */
+  const onboarded = session?.method === "onboarding" ? state.onboarding.result : undefined;
+
+  const activity = onboarded
+    ? [
+        {
+          id: "baseline",
+          kind: "assessment" as const,
+          title: "Completed Baseline Assessment",
+          detail: `${onboarded.overallPct}% - ${onboarded.correct} of ${onboarded.total} correct`,
+          when: "Just now",
+        },
+        {
+          id: "profile",
+          kind: "competency" as const,
+          title: "Competency Profile Created",
+          detail: `${onboarded.competencies.length} competencies estimated for ${onboarded.roleName}`,
+          when: "Just now",
+        },
+      ]
+    : [
+        ...Object.values(state.results)
+          .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
+          .slice(0, 1)
+          .map((r) => ({
+            id: r.assessmentId,
+            kind: "assessment" as const,
+            title: r.passed && r.integrity !== "invalid" ? "Completed Assessment" : "Assessment Attempted",
+            detail: `${r.scorePct}% - ${r.integrity === "invalid" ? "integrity flagged" : r.passed ? "passed" : "not passed"}`,
+            when: "Just now",
+          })),
+        ...RECENT_ACTIVITY,
+      ].slice(0, 4);
 
   return (
     <div className="space-y-4">
@@ -64,10 +88,19 @@ export default function DashboardPage() {
             </Donut>
             <div>
               <p className="font-display text-[15px] font-semibold text-ink">{overallLabel(c.overall)}</p>
-              <p className="mt-0.5 inline-flex items-center gap-1 text-[13px] font-semibold text-emerald-600">
-                <TrendingUp className="size-4" aria-hidden /> +{c.overallDelta.toFixed(1)}
-              </p>
-              <p className="text-[11px] text-ink-muted">since last assessment</p>
+              {onboarded ? (
+                <>
+                  <p className="mt-0.5 text-[13px] font-semibold text-brand-600">Baseline</p>
+                  <p className="text-[11px] text-ink-muted">from onboarding assessment</p>
+                </>
+              ) : (
+                <>
+                  <p className="mt-0.5 inline-flex items-center gap-1 text-[13px] font-semibold text-emerald-600">
+                    <TrendingUp className="size-4" aria-hidden /> +{c.overallDelta.toFixed(1)}
+                  </p>
+                  <p className="text-[11px] text-ink-muted">since last assessment</p>
+                </>
+              )}
             </div>
           </div>
         </StatCard>
@@ -76,7 +109,7 @@ export default function DashboardPage() {
           tone="blue"
           title="Active Learning"
           value={c.activeLearning}
-          caption="Courses in Progress"
+          caption={onboarded ? "Recommended for You" : "Courses in Progress"}
           link={{ href: "/learning", label: "View Courses" }}
         />
         <StatCard
@@ -91,8 +124,8 @@ export default function DashboardPage() {
           icon={ShieldCheck}
           tone="emerald"
           title="Verified Evidence"
-          value={c.verifiedEvidence}
-          caption="Completed & Verified"
+          value={onboarded ? 0 : c.verifiedEvidence}
+          caption={onboarded ? "Complete a course to add evidence" : "Completed & Verified"}
           link={{ href: "/evidence", label: "View Evidence" }}
         />
       </div>

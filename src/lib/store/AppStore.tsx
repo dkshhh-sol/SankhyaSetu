@@ -23,6 +23,8 @@ import { getSession, signOut as clearSession, type Session } from "@/lib/auth";
 import { ASSESSMENTS, type Assessment } from "@/lib/data/assessments";
 import { SKILLS } from "@/lib/data/competencies";
 import type { AssessmentResult, Violation } from "@/lib/assessment/scoring";
+import type { BaselineResult } from "@/lib/onboarding/engine";
+import { skillLevelsFrom } from "@/lib/onboarding/engine";
 
 const STATE_KEY = "ss.state";
 
@@ -43,6 +45,29 @@ export interface AttemptState {
   loads: number;
 }
 
+/** What the new official entered on the onboarding profile step. */
+export interface OnboardingProfile {
+  fullName: string;
+  designation: string;
+  department: string;
+  experience: string;
+  qualification: string;
+}
+
+/**
+ * The new-official journey. Kept in the same persisted state as everything
+ * else so profile, role and answers survive navigation between the steps.
+ */
+export interface OnboardingState {
+  profile?: OnboardingProfile;
+  roleId?: string;
+  assignment?: string;
+  /** Selected option index per baseline question id. */
+  answers: Record<string, number>;
+  /** Set once the baseline assessment has been scored. */
+  result?: BaselineResult;
+}
+
 export interface AppState {
   attempts: Record<string, AttemptState>;
   results: Record<string, AssessmentResult>;
@@ -52,6 +77,7 @@ export interface AppState {
   readNotifications: string[];
   /** Id of the most recently completed assessment, for the Progress pages. */
   lastResultId?: string;
+  onboarding: OnboardingState;
 }
 
 const initialState: AppState = {
@@ -60,6 +86,7 @@ const initialState: AppState = {
   skillLevels: {},
   customAssessments: [],
   readNotifications: [],
+  onboarding: { answers: {} },
 };
 
 type Action =
@@ -71,12 +98,23 @@ type Action =
   | { type: "attempt/discard"; id: string }
   | { type: "assessment/create"; assessment: Assessment }
   | { type: "notifications/read"; ids: string[] }
+  | { type: "onboarding/reset" }
+  | { type: "onboarding/profile"; profile: OnboardingProfile }
+  | { type: "onboarding/role"; roleId: string; assignment: string }
+  | { type: "onboarding/answer"; questionId: string; option: number }
+  | { type: "onboarding/submit"; result: BaselineResult }
   | { type: "reset" };
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case "hydrate":
-      return { ...initialState, ...action.state };
+      // Merge the onboarding slice explicitly so state persisted before this
+      // feature existed still hydrates with a usable shape.
+      return {
+        ...initialState,
+        ...action.state,
+        onboarding: { ...initialState.onboarding, ...action.state.onboarding },
+      };
     case "attempt/start":
       return { ...state, attempts: { ...state.attempts, [action.attempt.assessmentId]: action.attempt } };
     case "attempt/update": {
@@ -117,6 +155,32 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, customAssessments: [action.assessment, ...state.customAssessments] };
     case "notifications/read":
       return { ...state, readNotifications: Array.from(new Set([...state.readNotifications, ...action.ids])) };
+    case "onboarding/reset":
+      return { ...state, onboarding: { answers: {} }, skillLevels: {} };
+    case "onboarding/profile":
+      return { ...state, onboarding: { ...state.onboarding, profile: action.profile } };
+    case "onboarding/role":
+      return {
+        ...state,
+        onboarding: { ...state.onboarding, roleId: action.roleId, assignment: action.assignment },
+      };
+    case "onboarding/answer":
+      return {
+        ...state,
+        onboarding: {
+          ...state.onboarding,
+          answers: { ...state.onboarding.answers, [action.questionId]: action.option },
+        },
+      };
+    case "onboarding/submit":
+      // The generated profile becomes this official's competency baseline, so
+      // the existing dashboard and competency pages read it like any other
+      // validated result.
+      return {
+        ...state,
+        onboarding: { ...state.onboarding, result: action.result },
+        skillLevels: { ...state.skillLevels, ...skillLevelsFrom(action.result) },
+      };
     case "reset":
       return initialState;
     default:

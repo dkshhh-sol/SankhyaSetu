@@ -23,20 +23,22 @@ export function DemoAccountRow({
   disabled = false,
 }: DemoAccountRowProps) {
   return (
-    <div className="flex flex-col gap-2.5 rounded-xl border border-slate-200 bg-white p-2 transition-colors hover:border-brand-200 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:p-2.5">
-      <div className="flex min-w-0 flex-1 items-center gap-3">
+    <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-1.5 transition-colors hover:border-brand-200 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:gap-2.5 sm:p-2">
+      <div className="flex min-w-0 flex-1 items-center gap-2.5">
         <span
           className={cn(
-            "flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+            "flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-bold",
             avatarStyles[account.accent],
           )}
           aria-hidden
         >
           {account.initials}
         </span>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-ink">{account.email}</p>
-          <p className="truncate text-xs text-ink-muted">{account.role}</p>
+        {/* Email and role share a line so three accounts stay inside the
+            sign-in card on short laptop screens. */}
+        <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2">
+          <p className="truncate text-[13px] font-semibold text-ink">{account.email}</p>
+          <p className="truncate text-[11px] text-ink-muted">{account.role}</p>
         </div>
       </div>
 
@@ -47,7 +49,7 @@ export function DemoAccountRow({
         disabled={disabled}
         onClick={() => onUse(account)}
         aria-label={`Use account ${account.email}`}
-        className="w-full sm:w-auto"
+        className="h-7 w-full px-2.5 text-[12px] sm:w-auto"
       >
         Use Account
       </Button>

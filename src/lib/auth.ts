@@ -12,7 +12,7 @@ import type { DemoAccount } from "@/lib/demoAccounts";
 
 const SESSION_KEY = "ss.session";
 
-export type SignInMethod = "parichay-sso" | "demo-account";
+export type SignInMethod = "parichay-sso" | "demo-account" | "onboarding";
 
 export interface Session {
   accountId: string;
@@ -40,6 +40,38 @@ export function signInWithAccount(
     initials: account.initials,
     division: account.division,
     method,
+    signedInAt: new Date().toISOString(),
+  };
+  persist(session);
+  return session;
+}
+
+/**
+ * Create a session for an official who has just completed onboarding.
+ *
+ * Same simulation as the demo accounts — no real credential is issued. The
+ * identity is built from what the official entered in the onboarding form.
+ */
+export function signInAsNewOfficial(input: {
+  fullName: string;
+  designation: string;
+  department: string;
+}): Session {
+  const name = input.fullName.trim() || "New Official";
+  const parts = name.split(/\s+/);
+  const initials = (
+    parts.length > 1 ? parts[0][0] + parts[parts.length - 1][0] : name.slice(0, 2)
+  ).toUpperCase();
+
+  const session: Session = {
+    accountId: "onboarded-official",
+    email: `${parts[0].toLowerCase()}@demo.gov.in`,
+    name,
+    firstName: parts[0],
+    role: input.designation,
+    initials,
+    division: input.department,
+    method: "onboarding",
     signedInAt: new Date().toISOString(),
   };
   persist(session);
