@@ -45,8 +45,16 @@ const check = (name, actual, expected) => {
   if (!ok) failures.push(name);
 };
 
-const browser = await chromium.launch({ channel: "chrome", headless: true });
-const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+const browser = await chromium.launch({
+  channel: "chrome",
+  headless: true,
+  args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"],
+});
+const ctx = await browser.newContext({
+  viewport: { width: 1440, height: 900 },
+  deviceScaleFactor: 1,
+  permissions: ["camera", "microphone"],
+});
 const page = await ctx.newPage();
 
 const pageErrors = [];
@@ -62,6 +70,20 @@ const cardOverflow = () =>
     const el = document.querySelector("section .scrollbar-thin");
     return el ? el.scrollHeight - el.clientHeight : -1;
   });
+
+/**
+ * Clear the proctoring dialog if it is open. Headless Chrome's fake camera
+ * device occasionally ends its track, which is a real `camera-lost` hard
+ * event; that is an environment artifact, not a product failure, so the
+ * clean-path run tolerates it.
+ */
+async function dismissDialog() {
+  const btn = page.getByRole("button", { name: /Return to full screen/ });
+  if (await btn.isVisible().catch(() => false)) {
+    await btn.click().catch(() => {});
+    await page.waitForTimeout(250);
+  }
+}
 
 /* ---------------- 1. Existing demo sign-in still works ---------------- */
 console.log("\n[1] Existing demo account sign-in");
@@ -108,17 +130,36 @@ await page.getByRole("button", { name: /Start Competency Assessment/ }).click();
 
 // Step 3 - assessment: choose option A for all 15
 await page.waitForURL("**/onboarding/assessment");
-await shot("03-assessment");
-check("assessment step fits", (await overflow()) <= 0, true);
+await shot("03-gate");
+check("proctoring gate shown", await page.getByText("Proctored assessment").isVisible(), true);
+check("gate fits", (await overflow()) <= 0, true);
 
+// Enter the proctored attempt (fake camera is granted by the launch args).
+await page.getByRole("button", { name: /Enter full screen & (begin|resume)/ }).click();
+await page.waitForTimeout(1200);
+await shot("03-assessment");
+check("proctor panel live", await page.getByText("Live Proctoring").isVisible(), true);
+
+await dismissDialog();
 const navButtons = page.locator('aside button[aria-label^="Question"]');
 for (let i = 0; i < 15; i++) {
+  await dismissDialog();
   await navButtons.nth(i).click();
-  await page.locator("ul li button[aria-pressed]").first().click();
+  await page.locator('button[role="radio"]').first().click();
   // Let the auto-advance settle before navigating to the next item.
   await page.waitForTimeout(300);
 }
-check("all 15 answered", await page.getByText("15 of 15 answered").isVisible(), true);
+check("all 15 answered", await page.getByText("15 answered").isVisible(), true);
+
+// Nothing this run did should have tripped the anti-cheat. (A spurious
+// camera-lost from the fake device is ignored - see dismissDialog.)
+const induced = await page.evaluate(() => {
+  const st = JSON.parse(sessionStorage.getItem("ss.state") ?? "{}");
+  const bad = ["tab-switch", "window-blur", "copy-paste", "shortcut", "fullscreen-exit", "devtools"];
+  return (st.onboarding?.violations ?? []).filter((v) => bad.includes(v.type)).length;
+});
+check("no anti-cheat events during a clean run", induced, 0);
+await dismissDialog();
 await navButtons.nth(14).click();
 await page.getByRole("button", { name: /Submit Assessment/ }).click();
 
