@@ -90,8 +90,9 @@ await page.waitForURL("**/onboarding/profile");
 
 // Step 1 - basic profile
 await page.fill("#ob-name", "Ananya Iyer");
-await page.fill("#ob-designation", "Junior Statistical Officer");
+await page.selectOption("#ob-designation", "Junior Statistical Officer (JSO)");
 await page.selectOption("#ob-exp", { index: 1 });
+check("designation is a dropdown", await page.locator("select#ob-designation").count(), 1);
 await shot("01-profile");
 check("profile step fits", (await overflow()) <= 0, true);
 await page.getByRole("button", { name: "Continue" }).click();

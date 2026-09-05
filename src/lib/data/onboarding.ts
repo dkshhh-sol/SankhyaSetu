@@ -116,6 +116,26 @@ export const ASSIGNMENTS = [
   "Management / Administration",
 ] as const;
 
+/**
+ * Designations in the official statistical system, roughly by seniority.
+ * Distinct from `ROLES` — designation is the post held, role is the kind of
+ * work done, and only the role drives the required competency levels.
+ */
+export const DESIGNATIONS = [
+  "Statistical Investigator Grade II",
+  "Statistical Investigator Grade I",
+  "Junior Statistical Officer (JSO)",
+  "Senior Statistical Officer (SSO)",
+  "Research Officer",
+  "Assistant Director",
+  "Deputy Director",
+  "Joint Director",
+  "Director",
+  "Deputy Director General",
+  "Consultant / Young Professional",
+  "Other",
+] as const;
+
 export const QUALIFICATIONS = [
   "Bachelor's Degree",
   "Master's Degree (Statistics / Economics)",

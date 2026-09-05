@@ -6,7 +6,7 @@ import { ArrowRight, UserRound } from "lucide-react";
 import { OnboardingFrame } from "@/components/onboarding/OnboardingFrame";
 import { Button } from "@/components/ui/Button";
 import { Label, Select, TextInput } from "@/components/ui/Fields";
-import { DEPARTMENTS, EXPERIENCE_BANDS, QUALIFICATIONS } from "@/lib/data/onboarding";
+import { DEPARTMENTS, DESIGNATIONS, EXPERIENCE_BANDS, QUALIFICATIONS } from "@/lib/data/onboarding";
 import { useAppStore, type OnboardingProfile } from "@/lib/store/AppStore";
 
 /** Step 1 — who the official is. Kept short; this is not a full HR record. */
@@ -34,7 +34,7 @@ function ProfileForm({ saved }: { saved?: OnboardingProfile }) {
 
   const [form, setForm] = useState<OnboardingProfile>({
     fullName: saved?.fullName ?? "",
-    designation: saved?.designation ?? "",
+    designation: saved?.designation ?? DESIGNATIONS[2],
     department: saved?.department ?? DEPARTMENTS[0],
     experience: saved?.experience ?? EXPERIENCE_BANDS[1],
     qualification: saved?.qualification ?? QUALIFICATIONS[1],
@@ -44,9 +44,10 @@ function ProfileForm({ saved }: { saved?: OnboardingProfile }) {
   const set = <K extends keyof OnboardingProfile>(key: K, value: OnboardingProfile[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
 
+  // Every field except the name is a select with a default, so the name is
+  // the only thing that can be missing.
   const nameOk = form.fullName.trim().length > 1;
-  const designationOk = form.designation.trim().length > 1;
-  const valid = nameOk && designationOk;
+  const valid = nameOk;
 
   function handleContinue() {
     setTouched(true);
@@ -99,16 +100,17 @@ function ProfileForm({ saved }: { saved?: OnboardingProfile }) {
 
         <div>
           <Label htmlFor="ob-designation">Designation</Label>
-          <TextInput
+          <Select
             id="ob-designation"
             value={form.designation}
-            placeholder="e.g. Junior Statistical Officer"
             onChange={(e) => set("designation", e.target.value)}
-            aria-invalid={touched && !designationOk ? true : undefined}
-          />
-          {touched && !designationOk && (
-            <p className="mt-1 text-[11px] font-medium text-red-600">Please enter your designation.</p>
-          )}
+          >
+            {DESIGNATIONS.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </Select>
         </div>
 
         <div>
