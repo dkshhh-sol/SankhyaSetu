@@ -16,7 +16,7 @@ export function MinistryEmblem({ className, compact }: MinistryEmblemProps) {
       <img
         src="/images/emblem.svg"
         alt="State Emblem of India"
-        className={cn("shrink-0 object-contain", compact ? "h-8 w-auto" : "h-14 w-auto")}
+        className={cn("shrink-0 object-contain", compact ? "h-8 w-auto" : "h-12 w-auto")}
         draggable={false}
       />
       {compact ? (

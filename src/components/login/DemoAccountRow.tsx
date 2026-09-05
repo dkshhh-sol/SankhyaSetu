@@ -23,11 +23,11 @@ export function DemoAccountRow({
   disabled = false,
 }: DemoAccountRowProps) {
   return (
-    <div className="flex flex-col gap-2.5 rounded-2xl border border-slate-200 bg-white p-2.5 transition-colors hover:border-brand-200 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:p-3">
+    <div className="flex flex-col gap-2.5 rounded-xl border border-slate-200 bg-white p-2 transition-colors hover:border-brand-200 hover:bg-brand-50/40 sm:flex-row sm:items-center sm:p-2.5">
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <span
           className={cn(
-            "flex size-11 shrink-0 items-center justify-center rounded-full text-sm font-bold",
+            "flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-bold",
             avatarStyles[account.accent],
           )}
           aria-hidden

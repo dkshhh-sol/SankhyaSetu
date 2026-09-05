@@ -22,13 +22,13 @@ export function FeatureBadge({ icon: Icon, label, accent }: FeatureBadgeProps) {
     <div className="flex w-24 flex-col items-center text-center sm:w-28">
       <div
         className={cn(
-          "flex size-14 items-center justify-center rounded-full",
+          "flex size-12 items-center justify-center rounded-full",
           accentStyles[accent],
         )}
       >
-        <Icon className="size-6" strokeWidth={2} aria-hidden />
+        <Icon className="size-5" strokeWidth={2} aria-hidden />
       </div>
-      <p className="mt-2.5 text-sm font-semibold leading-snug text-ink-soft">
+      <p className="mt-2 text-[13px] font-semibold leading-snug text-ink-soft">
         {label}
       </p>
     </div>
